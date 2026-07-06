@@ -3,691 +3,226 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MyBalloons — עיצוב בלונים לאירועים | מיכאל כהן</title>
-<meta name="description" content="MyBalloons — עיצוב וסידור בלונים לאירועים בכל הארץ: ימי הולדת, חתונות, בר/בת מצווה, אירועי חברה, הדפסה על בלונים ועוד. 13+ שנות ניסיון, זמינות 24/7.">
+<title>מיתוג והדפסה על בלונים לעסקים | MyBalloons — מיכאל כהן</title>
+<meta name="description" content="מיתוג בלונים לעסקים: הדפסה על בלונים, עיצוב אולמות תצוגת רכב, אירועי הייטק והשקות, סופרמרקטים וחנויות. שירות בכל הארץ — שלחו לוגו בוואטסאפ וקבלו הצעה.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&family=Rubik:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;900&family=Rubik:wght@500;700;900&display=swap" rel="stylesheet">
 <style>
 :root{
-  --pink:#ff4d8d; --purple:#7c3aed; --blue:#38bdf8; --yellow:#fbbf24; --teal:#2dd4bf;
-  --ink:#1e1b3a; --ink-soft:#4b4670; --bg:#fffaf5; --card:#ffffff;
+  --pink:#ff4d8d; --purple:#7c3aed; --blue:#38bdf8; --wa:#25d366;
+  --ink:#1e1b3a; --ink-soft:#4b4670; --bg:#fffaf5;
   --grad:linear-gradient(135deg,#ff4d8d 0%,#7c3aed 55%,#38bdf8 100%);
   --shadow:0 10px 30px rgba(30,27,58,.10);
-  --radius:22px;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--ink);overflow-x:hidden;line-height:1.7}
+body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;overflow-x:hidden}
 h1,h2,h3{font-family:'Rubik',sans-serif;line-height:1.25}
-img{max-width:100%}
 a{color:inherit;text-decoration:none}
-section{padding:90px 6vw;position:relative}
-.section-tag{display:inline-block;background:rgba(124,58,237,.1);color:var(--purple);font-weight:700;padding:6px 18px;border-radius:99px;font-size:.9rem;margin-bottom:14px}
-.section-title{font-size:clamp(1.8rem,4vw,2.7rem);font-weight:900;margin-bottom:12px}
-.section-sub{color:var(--ink-soft);max-width:640px;margin:0 auto 50px;font-size:1.05rem}
-.center{text-align:center}
 
-/* ---------- header ---------- */
-header{position:fixed;top:0;right:0;left:0;z-index:100;padding:14px 5vw;display:flex;align-items:center;justify-content:space-between;transition:.35s;background:transparent}
-header.scrolled{background:rgba(255,250,245,.92);backdrop-filter:blur(14px);box-shadow:0 4px 24px rgba(30,27,58,.08);padding:9px 5vw}
-.logo{display:flex;align-items:center;gap:10px;font-family:'Rubik';font-weight:900;font-size:1.35rem}
-.logo .balloon-ico{font-size:1.6rem;display:inline-block;animation:bob 3s ease-in-out infinite}
+/* hero */
+.hero{position:relative;padding:56px 6vw 46px;text-align:center;background:
+  radial-gradient(900px 500px at 85% -10%,rgba(124,58,237,.13),transparent),
+  radial-gradient(700px 400px at 5% 100%,rgba(255,77,141,.13),transparent),var(--bg)}
+.logo{font-family:'Rubik';font-weight:900;font-size:1.4rem;margin-bottom:26px;display:inline-flex;align-items:center;gap:8px}
+.logo span{animation:bob 3s ease-in-out infinite;display:inline-block}
 .logo b{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-nav ul{display:flex;gap:28px;list-style:none;font-weight:500}
-nav a{position:relative;padding:4px 0}
-nav a::after{content:"";position:absolute;bottom:-2px;right:0;width:0;height:3px;border-radius:3px;background:var(--grad);transition:.3s}
-nav a:hover::after,nav a.active::after{width:100%}
-.nav-cta{background:var(--grad);color:#fff;padding:10px 22px;border-radius:99px;font-weight:700;box-shadow:0 6px 18px rgba(255,77,141,.35);transition:.25s}
-.nav-cta:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(255,77,141,.45)}
-.burger{display:none;background:none;border:none;font-size:1.7rem;cursor:pointer;color:var(--ink)}
-
-/* ---------- hero ---------- */
-.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:120px 6vw 80px;background:
-  radial-gradient(1200px 600px at 80% -10%,rgba(124,58,237,.12),transparent),
-  radial-gradient(900px 500px at 10% 110%,rgba(255,77,141,.12),transparent),var(--bg)}
-.hero-inner{max-width:850px;position:relative;z-index:2}
-.hero .hello{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid rgba(124,58,237,.2);padding:8px 20px;border-radius:99px;font-weight:500;color:var(--ink-soft);box-shadow:var(--shadow);margin-bottom:22px}
-.hero h1{font-size:clamp(2.2rem,6vw,4rem);font-weight:900;margin-bottom:20px}
+.hero .badge{display:inline-block;background:#fff;border:1px solid rgba(124,58,237,.22);padding:7px 18px;border-radius:99px;font-weight:500;color:var(--ink-soft);box-shadow:var(--shadow);margin-bottom:18px;font-size:.92rem}
+.hero h1{font-size:clamp(1.9rem,5.5vw,3.3rem);font-weight:900;margin-bottom:14px}
 .hero h1 span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero p{font-size:1.15rem;color:var(--ink-soft);max-width:620px;margin:0 auto 34px}
-.hero-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;gap:10px;padding:15px 34px;border-radius:99px;font-weight:700;font-size:1.05rem;transition:.25s;cursor:pointer;border:none;font-family:'Heebo'}
-.btn-primary{background:var(--grad);color:#fff;box-shadow:0 8px 24px rgba(255,77,141,.4)}
-.btn-primary:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 14px 32px rgba(255,77,141,.5)}
-.btn-ghost{background:#fff;color:var(--ink);border:2px solid rgba(30,27,58,.12)}
-.btn-ghost:hover{border-color:var(--purple);color:var(--purple);transform:translateY(-3px)}
-.hero-hint{margin-top:26px;font-size:.85rem;color:var(--ink-soft);opacity:.75}
-#balloonCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:1;cursor:pointer}
-.scroll-down{position:absolute;bottom:26px;right:50%;transform:translateX(50%);z-index:2;color:var(--ink-soft);font-size:1.5rem;animation:bob 2s infinite}
+.hero p{color:var(--ink-soft);max-width:600px;margin:0 auto 28px;font-size:1.08rem}
+.cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:15px 32px;border-radius:99px;font-weight:700;font-size:1.08rem;transition:.25s;border:none;cursor:pointer;font-family:'Heebo'}
+.btn-wa{background:var(--wa);color:#fff;box-shadow:0 8px 24px rgba(37,211,102,.4)}
+.btn-wa:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(37,211,102,.5)}
+.btn-call{background:#fff;color:var(--ink);border:2px solid rgba(30,27,58,.12)}
+.btn-call:hover{border-color:var(--purple);color:var(--purple);transform:translateY(-3px)}
+.trust{display:flex;gap:26px;justify-content:center;flex-wrap:wrap;margin-top:30px;color:var(--ink-soft);font-weight:500;font-size:.95rem}
+.trust span{display:flex;align-items:center;gap:7px}
 
-/* ---------- stats ---------- */
-.stats{background:var(--grad);padding:46px 6vw;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:20px;color:#fff;text-align:center}
-.stat b{display:block;font-family:'Rubik';font-size:2.4rem;font-weight:900}
-.stat span{opacity:.9;font-weight:500}
+/* catalog */
+.catalog{padding:60px 6vw 30px;max-width:1150px;margin:0 auto}
+.catalog h2{text-align:center;font-size:clamp(1.6rem,4vw,2.3rem);font-weight:900;margin-bottom:8px}
+.catalog .sub{text-align:center;color:var(--ink-soft);max-width:560px;margin:0 auto 36px}
+.cat-block{margin-bottom:52px}
+.cat-head{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.cat-head .ci{width:48px;height:48px;border-radius:14px;background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
+.cat-head h3{font-size:1.3rem}
+.cat-head p{color:var(--ink-soft);font-size:.92rem}
+.cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.cat-grid .ph{border-radius:16px;overflow:hidden;aspect-ratio:4/3;cursor:pointer;box-shadow:var(--shadow);background:#eee;transition:.3s}
+.cat-grid .ph:hover{transform:scale(1.04)}
+.cat-grid .ph img{width:100%;height:100%;object-fit:cover;display:block}
+@media(max-width:760px){.cat-grid{grid-template-columns:repeat(2,1fr)}}
 
-/* ---------- services ---------- */
-.filters{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:40px}
-.filter-btn{background:#fff;border:2px solid rgba(30,27,58,.1);padding:9px 22px;border-radius:99px;font-weight:600;cursor:pointer;font-family:'Heebo';font-size:.95rem;transition:.25s;color:var(--ink-soft)}
-.filter-btn:hover{border-color:var(--purple);color:var(--purple)}
-.filter-btn.on{background:var(--grad);color:#fff;border-color:transparent;box-shadow:0 6px 16px rgba(124,58,237,.35)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:24px}
-.card{background:var(--card);border-radius:var(--radius);padding:30px 24px;box-shadow:var(--shadow);transition:.35s;position:relative;overflow:hidden;border:1px solid rgba(30,27,58,.05)}
-.card::before{content:"";position:absolute;top:0;right:0;left:0;height:5px;background:var(--grad);transform:scaleX(0);transform-origin:right;transition:.35s}
-.card:hover{transform:translateY(-8px);box-shadow:0 18px 44px rgba(30,27,58,.16)}
-.card:hover::before{transform:scaleX(1)}
-.card .ico{font-size:2.4rem;margin-bottom:14px;display:inline-block;transition:.35s}
-.card:hover .ico{transform:scale(1.2) rotate(-8deg)}
-.card h3{font-size:1.15rem;margin-bottom:8px}
-.card p{color:var(--ink-soft);font-size:.93rem}
-.card.hide{display:none}
+/* steps */
+.steps{background:#fff;padding:56px 6vw;text-align:center}
+.steps h2{font-size:clamp(1.6rem,4vw,2.2rem);font-weight:900;margin-bottom:36px}
+.steps-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px;max-width:950px;margin:0 auto}
+.step{background:var(--bg);border-radius:20px;padding:28px 22px;border:1px solid rgba(124,58,237,.1)}
+.step .n{width:44px;height:44px;border-radius:50%;background:var(--grad);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-family:'Rubik';font-weight:900;font-size:1.2rem;margin-bottom:14px}
+.step b{display:block;font-size:1.08rem;margin-bottom:6px}
+.step p{color:var(--ink-soft);font-size:.95rem}
 
-/* ---------- about ---------- */
-.about{background:#fff}
-.about-wrap{display:grid;grid-template-columns:1.1fr 1fr;gap:60px;align-items:center;max-width:1150px;margin:0 auto}
-.about-art{position:relative;min-height:380px;border-radius:var(--radius);background:radial-gradient(400px 300px at 30% 20%,rgba(56,189,248,.18),transparent),radial-gradient(400px 300px at 80% 80%,rgba(255,77,141,.18),transparent),#faf7ff;display:flex;align-items:center;justify-content:center;overflow:hidden;border:1px solid rgba(124,58,237,.12)}
-.about-art svg{width:82%;height:auto}
-.why-list{list-style:none;margin-top:22px;display:grid;gap:14px}
-.why-list li{display:flex;gap:14px;align-items:flex-start;background:var(--bg);padding:16px 18px;border-radius:16px;transition:.25s;border:1px solid transparent}
-.why-list li:hover{border-color:rgba(124,58,237,.25);transform:translateX(-4px)}
-.why-list .dot{flex-shrink:0;width:38px;height:38px;border-radius:50%;background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.1rem}
-.why-list b{display:block}
-.why-list small{color:var(--ink-soft)}
+/* final cta */
+.final{background:linear-gradient(160deg,#241d4d,#3b2a7d 60%,#1e1b3a);color:#fff;padding:64px 6vw;text-align:center}
+.final h2{font-size:clamp(1.7rem,4.5vw,2.5rem);font-weight:900;margin-bottom:10px}
+.final p{opacity:.85;margin-bottom:28px;font-size:1.05rem}
+.final .phone{display:block;font-family:'Rubik';font-weight:900;font-size:clamp(1.8rem,6vw,2.6rem);letter-spacing:1px;margin:18px 0 6px;direction:ltr}
+.final small{opacity:.65}
 
-/* ---------- builder ---------- */
-.builder{background:radial-gradient(900px 500px at 90% 0%,rgba(251,191,36,.12),transparent),var(--bg)}
-.builder-box{max-width:880px;margin:0 auto;background:#fff;border-radius:28px;box-shadow:0 20px 60px rgba(30,27,58,.12);padding:44px;border:1px solid rgba(124,58,237,.1)}
-.step-label{font-weight:700;margin:26px 0 12px;display:flex;align-items:center;gap:10px}
-.step-label .n{width:30px;height:30px;border-radius:50%;background:var(--grad);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:.9rem;font-family:'Rubik'}
-.chips{display:flex;gap:10px;flex-wrap:wrap}
-.chip{padding:10px 20px;border-radius:99px;border:2px solid rgba(30,27,58,.12);background:#fff;cursor:pointer;font-family:'Heebo';font-weight:600;font-size:.95rem;transition:.2s;color:var(--ink-soft)}
-.chip:hover{border-color:var(--purple)}
-.chip.on{background:var(--purple);border-color:var(--purple);color:#fff;box-shadow:0 6px 14px rgba(124,58,237,.3)}
-.swatches{display:flex;gap:14px;flex-wrap:wrap}
-.swatch{width:46px;height:46px;border-radius:50%;cursor:pointer;border:3px solid #fff;box-shadow:0 3px 10px rgba(0,0,0,.18);transition:.2s;position:relative}
-.swatch.on{transform:scale(1.18)}
-.swatch.on::after{content:"✓";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;text-shadow:0 1px 3px rgba(0,0,0,.4)}
-.builder-preview{margin-top:30px;background:var(--bg);border-radius:18px;padding:22px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
-.preview-balloons{display:flex;gap:6px;min-height:80px;align-items:flex-end}
-.pb{width:44px;height:56px;border-radius:50% 50% 50% 50%/45% 45% 55% 55%;position:relative;animation:bob 2.6s ease-in-out infinite}
-.pb::after{content:"";position:absolute;bottom:-16px;right:50%;width:2px;height:16px;background:rgba(30,27,58,.3)}
-.pb:nth-child(2){animation-delay:.4s}.pb:nth-child(3){animation-delay:.8s}
-.preview-text{flex:1;min-width:220px}
-.preview-text b{font-size:1.05rem}
-.preview-text p{color:var(--ink-soft);font-size:.95rem}
-.builder-actions{margin-top:26px;display:flex;gap:14px;flex-wrap:wrap}
+footer{background:#171430;color:rgba(255,255,255,.6);padding:22px 6vw;text-align:center;font-size:.88rem}
+footer a{text-decoration:underline;opacity:.8}
 
-/* ---------- gallery ---------- */
-.g-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px}
-.g-item{border-radius:18px;overflow:hidden;position:relative;aspect-ratio:4/3;cursor:pointer;box-shadow:var(--shadow);transition:.3s;background:#eee}
-.g-item:hover{transform:scale(1.03)}
-.g-item img{width:100%;height:100%;object-fit:cover;display:block;transition:.4s}
-.g-item:hover img{transform:scale(1.08)}
-.g-item .cap{position:absolute;bottom:0;right:0;left:0;background:linear-gradient(transparent,rgba(30,27,58,.85));color:#fff;padding:30px 16px 12px;font-weight:700;font-size:.95rem}
-.g-more{margin-top:34px}
-/* lightbox */
-.lb{position:fixed;inset:0;z-index:200;background:rgba(23,20,48,.93);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;opacity:0;pointer-events:none;transition:.3s}
-.lb.open{opacity:1;pointer-events:auto}
-.lb img{max-width:92vw;max-height:80vh;border-radius:14px;box-shadow:0 20px 80px rgba(0,0,0,.5)}
-.lb .lb-cap{color:#fff;font-weight:700;font-size:1.05rem}
-.lb button{position:absolute;background:rgba(255,255,255,.12);border:none;color:#fff;font-size:1.6rem;cursor:pointer;width:52px;height:52px;border-radius:50%;transition:.2s;display:flex;align-items:center;justify-content:center}
-.lb button:hover{background:rgba(255,255,255,.28)}
-.lb .lb-close{top:20px;right:20px}
-.lb .lb-prev{right:16px;top:50%;transform:translateY(-50%)}
-.lb .lb-next{left:16px;top:50%;transform:translateY(-50%)}
-@media(max-width:640px){.lb .lb-prev{right:6px}.lb .lb-next{left:6px}}
-
-/* ---------- testimonials ---------- */
-.testi{background:#fff}
-.testi-viewport{max-width:760px;margin:0 auto;position:relative;min-height:230px}
-.t-card{position:absolute;inset:0;background:var(--bg);border-radius:24px;padding:38px;box-shadow:var(--shadow);opacity:0;transform:translateY(20px);transition:.6s;pointer-events:none;border:1px solid rgba(124,58,237,.1)}
-.t-card.show{opacity:1;transform:translateY(0);pointer-events:auto}
-.t-card .stars{color:var(--yellow);font-size:1.2rem;letter-spacing:3px;margin-bottom:12px}
-.t-card p{font-size:1.08rem;margin-bottom:18px}
-.t-card b{color:var(--purple)}
-.t-dots{display:flex;gap:9px;justify-content:center;margin-top:26px}
-.t-dot{width:11px;height:11px;border-radius:50%;background:rgba(30,27,58,.15);border:none;cursor:pointer;transition:.3s;padding:0}
-.t-dot.on{background:var(--purple);transform:scale(1.3)}
-
-/* ---------- faq ---------- */
-.faq-list{max-width:760px;margin:0 auto;display:grid;gap:14px}
-.faq-item{background:#fff;border-radius:16px;box-shadow:var(--shadow);overflow:hidden;border:1px solid rgba(30,27,58,.05)}
-.faq-q{width:100%;text-align:right;background:none;border:none;padding:20px 24px;font-family:'Heebo';font-size:1.05rem;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--ink)}
-.faq-q .plus{transition:.3s;font-size:1.3rem;color:var(--purple)}
-.faq-item.open .plus{transform:rotate(45deg)}
-.faq-a{max-height:0;overflow:hidden;transition:.4s;color:var(--ink-soft);padding:0 24px}
-.faq-item.open .faq-a{max-height:220px;padding:0 24px 20px}
-
-/* ---------- contact ---------- */
-.contact{background:linear-gradient(160deg,#241d4d,#3b2a7d 60%,#1e1b3a);color:#fff}
-.contact .section-sub{color:rgba(255,255,255,.75)}
-.contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:50px;max-width:1050px;margin:0 auto}
-.c-info{display:grid;gap:18px;align-content:start}
-.c-line{display:flex;gap:16px;align-items:center;background:rgba(255,255,255,.07);padding:18px 20px;border-radius:16px;transition:.25s;border:1px solid rgba(255,255,255,.08)}
-.c-line:hover{background:rgba(255,255,255,.13);transform:translateX(-4px)}
-.c-line .ci{font-size:1.5rem}
-.c-line small{display:block;opacity:.7;font-size:.85rem}
-.c-form{display:grid;gap:14px}
-.c-form input,.c-form select,.c-form textarea{width:100%;padding:14px 18px;border-radius:14px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);color:#fff;font-family:'Heebo';font-size:1rem;transition:.25s}
-.c-form input::placeholder,.c-form textarea::placeholder{color:rgba(255,255,255,.55)}
-.c-form select{appearance:none}
-.c-form select option{color:var(--ink)}
-.c-form :is(input,select,textarea):focus{outline:none;border-color:var(--pink);background:rgba(255,255,255,.14)}
-.c-form textarea{min-height:110px;resize:vertical}
-.form-note{font-size:.85rem;opacity:.7}
-
-/* ---------- footer ---------- */
-footer{background:#171430;color:rgba(255,255,255,.7);padding:36px 6vw;text-align:center;font-size:.92rem}
-footer .logo{justify-content:center;color:#fff;margin-bottom:10px}
-footer .soc{display:flex;gap:18px;justify-content:center;margin:14px 0}
-footer .soc a{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:1.2rem;transition:.25s}
-footer .soc a:hover{background:var(--pink);transform:translateY(-3px)}
-
-/* ---------- floating ---------- */
-.float-wa{position:fixed;bottom:24px;left:24px;z-index:90;width:60px;height:60px;border-radius:50%;background:#25d366;color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(37,211,102,.45);transition:.25s;animation:pulse 2.5s infinite}
+/* floating wa */
+.float-wa{position:fixed;bottom:22px;left:22px;z-index:90;width:62px;height:62px;border-radius:50%;background:var(--wa);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(37,211,102,.45);animation:pulse 2.5s infinite;transition:.25s}
 .float-wa:hover{transform:scale(1.1)}
-.float-wa svg{width:32px;height:32px;fill:#fff}
-.to-top{position:fixed;bottom:24px;right:24px;z-index:90;width:48px;height:48px;border-radius:50%;background:#fff;border:1px solid rgba(30,27,58,.12);color:var(--purple);font-size:1.2rem;cursor:pointer;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:.3s}
-.to-top.show{opacity:1;pointer-events:auto}
-.to-top:hover{transform:translateY(-4px)}
+.float-wa svg{width:34px;height:34px;fill:#fff}
 
-/* ---------- reveal ---------- */
-.reveal{opacity:0;transform:translateY(34px);transition:.8s cubic-bezier(.2,.7,.3,1)}
+/* lightbox */
+.lb{position:fixed;inset:0;z-index:200;background:rgba(23,20,48,.93);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:.3s}
+.lb.open{opacity:1;pointer-events:auto}
+.lb img{max-width:92vw;max-height:84vh;border-radius:14px;box-shadow:0 20px 80px rgba(0,0,0,.5)}
+.lb button{position:absolute;background:rgba(255,255,255,.12);border:none;color:#fff;font-size:1.6rem;cursor:pointer;width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:.2s}
+.lb button:hover{background:rgba(255,255,255,.28)}
+.lb .x{top:18px;right:18px}
+.lb .p{right:12px;top:50%;transform:translateY(-50%)}
+.lb .n{left:12px;top:50%;transform:translateY(-50%)}
+
+.reveal{opacity:0;transform:translateY(30px);transition:.7s cubic-bezier(.2,.7,.3,1)}
 .reveal.in{opacity:1;transform:none}
-
-@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
 @keyframes pulse{0%,100%{box-shadow:0 8px 24px rgba(37,211,102,.45)}50%{box-shadow:0 8px 24px rgba(37,211,102,.45),0 0 0 14px rgba(37,211,102,0)}}
-
-/* ---------- mobile ---------- */
-@media(max-width:880px){
-  .about-wrap,.contact-wrap{grid-template-columns:1fr}
-  nav{position:fixed;inset:0;background:rgba(255,250,245,.98);display:flex;align-items:center;justify-content:center;transform:translateY(-100%);transition:.4s;z-index:99}
-  nav.open{transform:none}
-  nav ul{flex-direction:column;text-align:center;font-size:1.4rem;gap:30px}
-  .burger{display:block;z-index:100}
-  .nav-cta{display:none}
-  .builder-box{padding:28px 20px}
-  section{padding:70px 5vw}
-}
 </style>
 </head>
 <body>
 
-<header id="header">
-  <a class="logo" href="#top"><span class="balloon-ico">🎈</span>My<b>Balloons</b></a>
-  <nav id="nav">
-    <ul>
-      <li><a href="#services">שירותים</a></li>
-      <li><a href="#about">אודות</a></li>
-      <li><a href="#builder">מחשבון הצעה</a></li>
-      <li><a href="#gallery">גלריה</a></li>
-      <li><a href="#testimonials">המלצות</a></li>
-      <li><a href="#contact">צור קשר</a></li>
-    </ul>
-  </nav>
-  <a class="nav-cta" href="tel:0738023447">📞 073-8023447</a>
-  <button class="burger" id="burger" aria-label="תפריט">☰</button>
-</header>
-
-<!-- HERO -->
-<section class="hero" id="top">
-  <canvas id="balloonCanvas"></canvas>
-  <div class="hero-inner">
-    <span class="hello">🎈 מיכאל כהן — 13+ שנות ניסיון בעיצוב אירועים</span>
-    <h1>עיצוב בלונים שהופך<br>כל אירוע <span>לחגיגה בלתי נשכחת</span></h1>
-    <p>מימי הולדת ובריתות ועד חתונות, אירועי חברה והשקות — ב‑MyBalloons אנחנו רואים בעיצוב בלונים אומנות. שירות בכל הארץ, זמינות 24/7, ואפילו הדמיה של העיצוב לפני האירוע.</p>
-    <div class="hero-btns">
-      <a class="btn btn-primary" href="#builder">🎉 קבלו הצעת מחיר בקליק</a>
-      <a class="btn btn-ghost" href="#gallery">צפו בעבודות שלנו</a>
-    </div>
-    <div class="hero-hint">💡 טיפ: נסו ללחוץ על הבלונים המרחפים...</div>
+<section class="hero">
+  <div class="logo"><span>🎈</span>My<b>Balloons</b></div><br>
+  <span class="badge">מיכאל כהן · 13+ שנות ניסיון · שירות בכל הארץ</span>
+  <h1>מיתוג והדפסה על בלונים<br><span>שגורמים לעסק שלכם לבלוט</span></h1>
+  <p>הלוגו שלכם על בלונים, קשתות ועמודים ממותגים — לאולמות תצוגת רכב, אירועי הייטק והשקות, סופרמרקטים וחנויות. שולחים לוגו, מקבלים הדמיה והצעת מחיר.</p>
+  <div class="cta-row">
+    <a class="btn btn-wa" id="waHero" href="#">📲 שלחו לוגו בוואטסאפ — 050-6686633</a>
+    <a class="btn btn-call" href="tel:0506686633">📞 חייגו למיכאל</a>
   </div>
-  <a class="scroll-down" href="#services" aria-label="גלול למטה">⌄</a>
-</section>
-
-<!-- STATS -->
-<div class="stats">
-  <div class="stat"><b data-count="13">0</b><span>שנות ניסיון</span></div>
-  <div class="stat"><b data-count="1500">0</b><span>אירועים מעוצבים</span></div>
-  <div class="stat"><b data-count="24">0</b><span>שעות זמינות ביממה</span></div>
-  <div class="stat"><b data-count="100">0</b><span>אחוז אהבה למקצוע</span></div>
-</div>
-
-<!-- SERVICES -->
-<section id="services" class="center">
-  <span class="section-tag">מה אנחנו עושים</span>
-  <h2 class="section-title">שירותי עיצוב בלונים לכל אירוע</h2>
-  <p class="section-sub">בחרו קטגוריה כדי לסנן, או גללו כדי לראות את כל מה שאנחנו יודעים לעשות — פרטי ועסקי, קטן וענק.</p>
-  <div class="filters" id="serviceFilters">
-    <button class="filter-btn on" data-f="all">הכל</button>
-    <button class="filter-btn" data-f="private">אירועים פרטיים</button>
-    <button class="filter-btn" data-f="business">עסקים וחברות</button>
-    <button class="filter-btn" data-f="deco">מתקני בלונים</button>
-  </div>
-  <div class="grid" id="serviceGrid">
-    <div class="card reveal" data-cat="private"><span class="ico">🎂</span><h3>ימי הולדת</h3><p>סידורי בלונים, זרים ומשלוחי בלונים שהופכים כל יום הולדת לחגיגה אמיתית.</p></div>
-    <div class="card reveal" data-cat="private"><span class="ico">💍</span><h3>חתונות והצעות נישואין</h3><p>עיצובים רומנטיים ואטרקציות לחתונה — מהחופה ועד רחבת הריקודים.</p></div>
-    <div class="card reveal" data-cat="private"><span class="ico">✡️</span><h3>בר / בת מצווה</h3><p>עיצוב צעיר, צבעוני ומדויק לגיל — כולל שערים, עמודים ופינות צילום.</p></div>
-    <div class="card reveal" data-cat="private"><span class="ico">👶</span><h3>בריתות ואירועי לידה</h3><p>סידורי בלונים עדינים ומרגשים לקבלת האורח החדש למשפחה.</p></div>
-    <div class="card reveal" data-cat="business"><span class="ico">🏢</span><h3>אירועי חברה והשקות</h3><p>עיצוב מרשים לאירועי עובדים, כנסים, השקות מוצר ואירועי קניונים.</p></div>
-    <div class="card reveal" data-cat="business"><span class="ico">🚗</span><h3>אולמות תצוגת רכב</h3><p>עיצובים גדולים ומושכי עין שגורמים לכל רכב בתצוגה לבלוט.</p></div>
-    <div class="card reveal" data-cat="business"><span class="ico">🛒</span><h3>קישוט סופרמרקטים וחנויות</h3><p>עיצוב חגיגי למבצעים, פתיחות וחגים שמכניס לקוחות פנימה.</p></div>
-    <div class="card reveal" data-cat="business"><span class="ico">🖨️</span><h3>הדפסה על בלונים</h3><p>לוגו, ברכה או תמונה — הדפסה איכותית שממתגת כל אירוע.</p></div>
-    <div class="card reveal" data-cat="deco"><span class="ico">🌈</span><h3>קשתות אורגניות</h3><p>הטרנד הכי חם — קשתות בלונים זורמות בשילובי צבעים מרהיבים.</p></div>
-    <div class="card reveal" data-cat="deco"><span class="ico">🚪</span><h3>שערי ועמודי בלונים</h3><p>כניסה מרשימה לאירוע ופינת צילום מושלמת לאורחים.</p></div>
-    <div class="card reveal" data-cat="deco"><span class="ico">🎆</span><h3>מפל רשת בלונים</h3><p>רגע השיא של האירוע — מאות בלונים שנופלים בבת אחת מהתקרה.</p></div>
-    <div class="card reveal" data-cat="deco"><span class="ico">🎁</span><h3>מארזים וזרי בלונים</h3><p>זרים ומארזים מעוצבים עם משלוח עד הבית — מתנה שתמיד משמחת.</p></div>
+  <div class="trust">
+    <span>✅ הדמיה לפני האירוע</span>
+    <span>⏰ זמינות 24/7</span>
+    <span>🚚 התקנה בכל הארץ</span>
   </div>
 </section>
 
-<!-- ABOUT -->
-<section id="about" class="about">
-  <div class="about-wrap">
-    <div class="reveal">
-      <span class="section-tag">אודות</span>
-      <h2 class="section-title">שמחה, חגיגה ויופי נפגשים יחד</h2>
-      <p style="color:var(--ink-soft)">אצלנו ב‑MyBalloons, עיצוב בלונים הוא לא רק קישוט — הוא אומנות. מיכאל כהן ממושב אחישמח מעצב אירועים כבר יותר מ‑13 שנים, במגזר הפרטי והעסקי, בכל חלקי הארץ.</p>
-      <ul class="why-list">
-        <li><span class="dot">💜</span><div><b>יחס חם ואישי</b><small>שירות אדיב ומלווה — מהשיחה הראשונה ועד פירוק האירוע.</small></div></li>
-        <li><span class="dot">🖼️</span><div><b>הדמיה לפני האירוע</b><small>שירות נדיר: תראו את עיצוב הבלונים שלכם עוד לפני שהוא קם.</small></div></li>
-        <li><span class="dot">🎨</span><div><b>מגוון ענק של עיצובים</b><small>גדלים, צורות וצבעים ייחודיים שמתאימים בדיוק לאירוע שלכם.</small></div></li>
-        <li><span class="dot">⏰</span><div><b>זמינות 24/7 בכל הארץ</b><small>גם אירוע של הרגע האחרון — אנחנו שם.</small></div></li>
-      </ul>
+<section class="catalog">
+  <h2>קטלוג מיתוג לפי ענפים</h2>
+  <p class="sub">דוגמאות מעבודות אמיתיות — לחצו על תמונה להגדלה.</p>
+
+  <div class="cat-block reveal">
+    <div class="cat-head">
+      <span class="ci">🖨️</span>
+      <div><h3>הדפסה ומיתוג על בלונים</h3><p>הלוגו והצבעים של החברה — על כל בלון, זר וקשת</p></div>
     </div>
-    <div class="about-art reveal">
-      <svg viewBox="0 0 400 340" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <g class="float-a"><ellipse cx="120" cy="110" rx="52" ry="64" fill="#ff4d8d"/><ellipse cx="104" cy="88" rx="14" ry="20" fill="#fff" opacity=".35"/><path d="M120 174 q-6 10 0 18 q6-8 0-18" fill="#e0356f"/><path d="M120 190 q-14 60 -8 130" stroke="#b8b3d9" fill="none" stroke-width="2"/></g>
-        <g class="float-b"><ellipse cx="230" cy="80" rx="44" ry="55" fill="#7c3aed"/><ellipse cx="217" cy="61" rx="12" ry="17" fill="#fff" opacity=".35"/><path d="M230 135 q-5 9 0 16 q5-7 0-16" fill="#5f27c7"/><path d="M230 149 q10 70 4 171" stroke="#b8b3d9" fill="none" stroke-width="2"/></g>
-        <g class="float-c"><ellipse cx="320" cy="140" rx="48" ry="59" fill="#38bdf8"/><ellipse cx="305" cy="119" rx="13" ry="18" fill="#fff" opacity=".35"/><path d="M320 199 q-5 9 0 16 q5-7 0-16" fill="#1d9fd8"/><path d="M320 213 q-8 55 -2 107" stroke="#b8b3d9" fill="none" stroke-width="2"/></g>
-        <g class="float-b"><ellipse cx="185" cy="200" rx="38" ry="47" fill="#fbbf24"/><ellipse cx="173" cy="184" rx="10" ry="14" fill="#fff" opacity=".4"/><path d="M185 247 q-4 8 0 14 q4-6 0-14" fill="#d99e0b"/><path d="M185 259 q6 35 2 61" stroke="#b8b3d9" fill="none" stroke-width="2"/></g>
-        <style>.float-a{animation:fa 4s ease-in-out infinite}.float-b{animation:fa 4s 1s ease-in-out infinite}.float-c{animation:fa 4s 2s ease-in-out infinite}@keyframes fa{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}</style>
-      </svg>
+    <div class="cat-grid" data-photos="46,44,37,47"></div>
+  </div>
+
+  <div class="cat-block reveal">
+    <div class="cat-head">
+      <span class="ci">🚗</span>
+      <div><h3>ענף הרכב</h3><p>אולמות תצוגה, השקות דגמים ומבצעי סוכנויות</p></div>
     </div>
+    <div class="cat-grid" data-photos="61,38,57,49"></div>
+  </div>
+
+  <div class="cat-block reveal">
+    <div class="cat-head">
+      <span class="ci">💻</span>
+      <div><h3>הייטק וחברות</h3><p>אירועי עובדים, כנסים, השקות מוצר וימי גיבוש</p></div>
+    </div>
+    <div class="cat-grid" data-photos="39,50,3,34"></div>
+  </div>
+
+  <div class="cat-block reveal">
+    <div class="cat-head">
+      <span class="ci">🛒</span>
+      <div><h3>סופרמרקטים וחנויות</h3><p>פתיחות, מבצעים וחגים שמושכים לקוחות פנימה</p></div>
+    </div>
+    <div class="cat-grid" data-photos="6,56,8,15"></div>
   </div>
 </section>
 
-<!-- BUILDER -->
-<section id="builder" class="builder">
-  <div class="center">
-    <span class="section-tag">אינטראקטיבי ✨</span>
-    <h2 class="section-title">בנו את האירוע שלכם ב־30 שניות</h2>
-    <p class="section-sub">בחרו סוג אירוע, סגנון וצבעים — ונשלח לכם הצעת מחיר מותאמת ישירות לוואטסאפ. בלי טפסים ארוכים.</p>
-  </div>
-  <div class="builder-box reveal">
-    <div class="step-label"><span class="n">1</span>איזה אירוע חוגגים?</div>
-    <div class="chips" id="evChips">
-      <button class="chip on" data-v="יום הולדת">🎂 יום הולדת</button>
-      <button class="chip" data-v="חתונה">💍 חתונה</button>
-      <button class="chip" data-v="בר/בת מצווה">✡️ בר/בת מצווה</button>
-      <button class="chip" data-v="ברית/בריתה">👶 ברית</button>
-      <button class="chip" data-v="אירוע עסקי">🏢 אירוע עסקי</button>
-      <button class="chip" data-v="אחר">🎉 אחר</button>
-    </div>
-    <div class="step-label"><span class="n">2</span>מה בא לכם?</div>
-    <div class="chips" id="styleChips">
-      <button class="chip on" data-v="קשת אורגנית">🌈 קשת אורגנית</button>
-      <button class="chip" data-v="שער בלונים">🚪 שער בלונים</button>
-      <button class="chip" data-v="זר/מארז בלונים">🎁 זר / מארז</button>
-      <button class="chip" data-v="מפל בלונים">🎆 מפל בלונים</button>
-      <button class="chip" data-v="הדפסה על בלונים">🖨️ הדפסה</button>
-      <button class="chip" data-v="עיצוב מלא לאירוע">✨ עיצוב מלא</button>
-    </div>
-    <div class="step-label"><span class="n">3</span>באילו צבעים?</div>
-    <div class="swatches" id="colorSwatches">
-      <button class="swatch on" data-v="ורוד" style="background:#ff4d8d" aria-label="ורוד"></button>
-      <button class="swatch" data-v="סגול" style="background:#7c3aed" aria-label="סגול"></button>
-      <button class="swatch" data-v="תכלת" style="background:#38bdf8" aria-label="תכלת"></button>
-      <button class="swatch" data-v="זהב" style="background:linear-gradient(135deg,#fbbf24,#f59e0b)" aria-label="זהב"></button>
-      <button class="swatch" data-v="לבן" style="background:#f3f4f6" aria-label="לבן"></button>
-      <button class="swatch" data-v="שחור" style="background:#1e1b3a" aria-label="שחור"></button>
-      <button class="swatch" data-v="אדום" style="background:#ef4444" aria-label="אדום"></button>
-      <button class="swatch" data-v="ירוק" style="background:#2dd4bf" aria-label="ירוק"></button>
-    </div>
-    <div class="builder-preview">
-      <div class="preview-balloons" id="previewBalloons"></div>
-      <div class="preview-text">
-        <b id="previewTitle">יום הולדת · קשת אורגנית</b>
-        <p id="previewColors">בצבעי ורוד</p>
-      </div>
-    </div>
-    <div class="builder-actions">
-      <button class="btn btn-primary" id="sendWa">📲 שלחו לי הצעת מחיר בוואטסאפ</button>
-      <a class="btn btn-ghost" href="tel:0738023447">או חייגו: 073-8023447</a>
-    </div>
+<section class="steps">
+  <h2>איך זה עובד?</h2>
+  <div class="steps-row">
+    <div class="step reveal"><span class="n">1</span><b>שולחים לוגו בוואטסאפ</b><p>תמונה של הלוגו + כמה מילים על האירוע והמקום</p></div>
+    <div class="step reveal"><span class="n">2</span><b>מקבלים הדמיה והצעה</b><p>תראו את העיצוב הממותג עוד לפני שהוא קם — שירות שאין כמעט לאף אחד</p></div>
+    <div class="step reveal"><span class="n">3</span><b>מיכאל מגיע ומתקין</b><p>בכל הארץ, בזמן שקבעתם — והעסק שלכם בולט</p></div>
   </div>
 </section>
 
-<!-- GALLERY -->
-<section id="gallery" class="center">
-  <span class="section-tag">גלריה</span>
-  <h2 class="section-title">עבודות אמיתיות מהשטח</h2>
-  <p class="section-sub">כל התמונות כאן הן מאירועים שמיכאל עיצב. לחצו על תמונה להגדלה, או סננו לפי קטגוריה.</p>
-  <div class="filters" id="gFilters">
-    <button class="filter-btn on" data-f="all">הכל</button>
-    <button class="filter-btn" data-f="bday">ימי הולדת</button>
-    <button class="filter-btn" data-f="love">חתונות ואהבה</button>
-    <button class="filter-btn" data-f="biz">עסקים ורכב</button>
-    <button class="filter-btn" data-f="arch">קשתות ושערים</button>
-    <button class="filter-btn" data-f="ceil">תקרות בלונים</button>
-    <button class="filter-btn" data-f="baby">תינוקות</button>
-  </div>
-  <div class="g-grid" id="gGrid"></div>
-  <button class="btn btn-ghost g-more" id="gMore">הצג את כל התמונות (60)</button>
-</section>
-
-<!-- LIGHTBOX -->
-<div class="lb" id="lb">
-  <button class="lb-close" aria-label="סגירה">✕</button>
-  <button class="lb-prev" aria-label="הקודם">‹</button>
-  <button class="lb-next" aria-label="הבא">›</button>
-  <img id="lbImg" src="" alt="">
-  <div class="lb-cap" id="lbCap"></div>
-</div>
-
-<!-- TESTIMONIALS -->
-<section id="testimonials" class="testi center">
-  <span class="section-tag">לקוחות מספרים</span>
-  <h2 class="section-title">למה חוזרים אלינו שוב ושוב</h2>
-  <p class="section-sub">ההמלצות מוצגות אוטומטית — אפשר גם לדפדף עם הנקודות למטה.</p>
-  <div class="testi-viewport" id="tViewport">
-    <div class="t-card show">
-      <div class="stars">★★★★★</div>
-      <p>"מיכאל נתן שירות מעולה! הבלונים החזיקו הרבה יותר ממה שציפינו והעיצוב היה מושלם. תודה רבה — ממליצים בחום!!"</p>
-      <b>— לקוחה פרטית, יום הולדת</b>
-    </div>
-    <div class="t-card">
-      <div class="stars">★★★★★</div>
-      <p>"הזמנו עיצוב לאירוע חברה עם הדפסת לוגו על הבלונים. התוצאה הייתה מקצועית ומרשימה, וכל העובדים צילמו את עצמם ליד השער."</p>
-      <b>— מנהלת משרד, אירוע עסקי</b>
-    </div>
-    <div class="t-card">
-      <div class="stars">★★★★★</div>
-      <p>"ההדמיה שקיבלנו מראש עשתה את כל ההבדל — ידענו בדיוק מה נקבל, ובאירוע עצמו זה נראה אפילו יותר טוב."</p>
-      <b>— זוג מאושר, חתונה</b>
-    </div>
-    <div class="t-card">
-      <div class="stars">★★★★★</div>
-      <p>"הזמנה של הרגע האחרון בערב חג — מיכאל ענה, הגיע, ועיצב בצורה מדהימה. זמינות וסבלנות שלא רואים בכל מקום."</p>
-      <b>— אבא גאה, בר מצווה</b>
-    </div>
-  </div>
-  <div class="t-dots" id="tDots"></div>
-</section>
-
-<!-- FAQ -->
-<section id="faq">
-  <div class="center">
-    <span class="section-tag">שאלות נפוצות</span>
-    <h2 class="section-title">כל מה שרציתם לדעת</h2>
-    <p class="section-sub">ואם משהו חסר — אנחנו רק הודעת וואטסאפ משם.</p>
-  </div>
-  <div class="faq-list">
-    <div class="faq-item"><button class="faq-q">לאילו אזורים אתם מגיעים?<span class="plus">+</span></button><div class="faq-a"><p>השירות ניתן בכל חלקי הארץ. אנחנו יוצאים ממושב אחישמח ומגיעים לכל אירוע — מהצפון ועד הדרום.</p></div></div>
-    <div class="faq-item"><button class="faq-q">כמה זמן מראש צריך להזמין?<span class="plus">+</span></button><div class="faq-a"><p>עדיף שבוע–שבועיים מראש כדי להבטיח זמינות ועיצוב מותאם, אבל אנחנו זמינים 24/7 וגם אירועי רגע אחרון מקבלים מענה.</p></div></div>
-    <div class="faq-item"><button class="faq-q">אפשר לראות את העיצוב לפני האירוע?<span class="plus">+</span></button><div class="faq-a"><p>כן! זה בדיוק היתרון שלנו — אנחנו מספקים שירות נדיר של הדמיית עיצוב הבלונים ללקוח, כך שתדעו בדיוק מה תקבלו.</p></div></div>
-    <div class="faq-item"><button class="faq-q">כמה זמן הבלונים מחזיקים?<span class="plus">+</span></button><div class="faq-a"><p>אנחנו עובדים עם בלונים איכותיים וטכניקות מקצועיות, כך שהעיצובים מחזיקים ימים רבים — לקוחות מספרים שהרבה מעבר למצופה.</p></div></div>
-    <div class="faq-item"><button class="faq-q">אתם מדפיסים לוגו או ברכה על בלונים?<span class="plus">+</span></button><div class="faq-a"><p>בהחלט. הדפסה על בלונים היא אחת ההתמחויות שלנו — מיתוג לאירועי חברה, ברכות אישיות ועיצובים בהתאמה מלאה.</p></div></div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact" class="contact">
-  <div class="center">
-    <span class="section-tag" style="background:rgba(255,255,255,.12);color:#fff">צור קשר</span>
-    <h2 class="section-title">בואו נתכנן את האירוע הבא שלכם 🎈</h2>
-    <p class="section-sub">השאירו פרטים ונחזור אליכם במהירות, או פשוט התקשרו — אנחנו זמינים 24/7.</p>
-  </div>
-  <div class="contact-wrap">
-    <div class="c-info reveal">
-      <a class="c-line" href="tel:0738023447"><span class="ci">📞</span><div><small>טלפון</small><b>073-8023447</b></div></a>
-      <a class="c-line" href="mailto:m9509790@gmail.com"><span class="ci">✉️</span><div><small>אימייל</small><b>m9509790@gmail.com</b></div></a>
-      <div class="c-line"><span class="ci">📍</span><div><small>מיקום</small><b>מושב אחישמח · שירות בכל הארץ</b></div></div>
-      <div class="c-line"><span class="ci">⏰</span><div><small>שעות פעילות</small><b>זמינות 24/7 — גם באירועי רגע אחרון</b></div></div>
-    </div>
-    <form class="c-form reveal" id="contactForm">
-      <input type="text" id="fName" placeholder="שם מלא *" required>
-      <input type="tel" id="fPhone" placeholder="טלפון *" required>
-      <select id="fType">
-        <option value="">סוג האירוע</option>
-        <option>יום הולדת</option><option>חתונה</option><option>בר/בת מצווה</option>
-        <option>ברית/בריתה</option><option>אירוע עסקי</option><option>אחר</option>
-      </select>
-      <textarea id="fMsg" placeholder="ספרו לנו קצת על האירוע..."></textarea>
-      <button type="submit" class="btn btn-primary" style="justify-content:center">שליחה בוואטסאפ 📲</button>
-      <p class="form-note">הטופס נפתח בוואטסאפ עם ההודעה מוכנה — בלי שרתים ובלי המתנה.</p>
-    </form>
-  </div>
+<section class="final">
+  <h2>רוצים שהמותג שלכם ירחף? 🎈</h2>
+  <p>דברו עם מיכאל — הצעת מחיר מהירה, בלי התחייבות</p>
+  <a class="btn btn-wa" id="waFinal" href="#">📲 פתחו וואטסאפ עם הודעה מוכנה</a>
+  <a class="phone" href="tel:0506686633">050-6686633</a>
+  <small>מיכאל כהן · MyBalloons · שירות בכל הארץ · זמינות 24/7</small>
 </section>
 
 <footer>
-  <a class="logo" href="#top"><span class="balloon-ico">🎈</span>My<b>Balloons</b></a>
-  <p>עיצוב וסידור בלונים לאירועים · מיכאל כהן · מושב אחישמח · שירות בכל הארץ</p>
-  <div class="soc">
-    <a href="https://www.facebook.com" aria-label="פייסבוק" target="_blank" rel="noopener">📘</a>
-    <a href="https://www.youtube.com/channel/UCYeOAsfyfQjhDhW30s7qhbQ" aria-label="יוטיוב" target="_blank" rel="noopener">▶️</a>
-    <a href="mailto:m9509790@gmail.com" aria-label="אימייל">✉️</a>
-  </div>
-  <p>© <span id="year"></span> MyBalloons — כל הזכויות שמורות</p>
+  © <span id="year"></span> MyBalloons — מיתוג והדפסה על בלונים לעסקים · <a href="full.html">לאתר המלא עם כל השירותים והגלריה</a>
 </footer>
 
 <a class="float-wa" id="waFloat" href="#" aria-label="וואטסאפ" target="_blank" rel="noopener">
   <svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.1.6 4.2 1.7 6L4 29l8.2-1.6c1.7.9 3.6 1.4 5.8 1.4 6.6 0 12-5.4 12-12S22.6 3 16 3zm0 22.2c-1.8 0-3.5-.5-5-1.4l-.4-.2-4.9 1 1-4.7-.3-.4c-1-1.6-1.6-3.4-1.6-5.4 0-5.5 4.5-10 10-10s10 4.5 10 10-4.4 10.1-9.8 10.1zm5.5-7.5c-.3-.2-1.8-.9-2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-.9 1.1-.2.2-.3.2-.6.1-.3-.2-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.5-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.6l-.9-2.3c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.2.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.2-.3-.2-.6-.4z"/></svg>
 </a>
-<button class="to-top" id="toTop" aria-label="חזרה למעלה">↑</button>
+
+<div class="lb" id="lb">
+  <button class="x" aria-label="סגירה">✕</button>
+  <button class="p" aria-label="הקודם">‹</button>
+  <button class="n" aria-label="הבא">›</button>
+  <img id="lbImg" src="" alt="דוגמת מיתוג בלונים">
+</div>
 
 <script>
-/* ===== config — עדכנו כאן את מספר הוואטסאפ של מיכאל (בפורמט בינלאומי, בלי +) ===== */
 const WA_NUMBER = "972506686633";
-const waLink = t => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(t)}`;
-document.getElementById('waFloat').href = waLink("היי מיכאל! ראיתי את האתר של MyBalloons ואשמח לשמוע פרטים 🎈");
+const WA_MSG = "היי מיכאל! 🎈 אשמח להצעת מחיר למיתוג בלונים לעסק. שולח/ת לוגו ופרטים כאן:";
+const waLink = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(WA_MSG)}`;
+['waHero','waFinal','waFloat'].forEach(id => { const el = document.getElementById(id); el.href = waLink; el.target = '_blank'; el.rel = 'noopener'; });
 document.getElementById('year').textContent = new Date().getFullYear();
 
-/* ===== header + nav ===== */
-const header = document.getElementById('header'), nav = document.getElementById('nav'),
-      burger = document.getElementById('burger'), toTop = document.getElementById('toTop');
-addEventListener('scroll', () => {
-  header.classList.toggle('scrolled', scrollY > 40);
-  toTop.classList.toggle('show', scrollY > 600);
-});
-burger.onclick = () => nav.classList.toggle('open');
-nav.querySelectorAll('a').forEach(a => a.onclick = () => nav.classList.remove('open'));
-toTop.onclick = () => scrollTo({top:0, behavior:'smooth'});
-
-/* ===== hero balloons: float + pop ===== */
-const cv = document.getElementById('balloonCanvas'), cx = cv.getContext('2d');
-const COLORS = ['#ff4d8d','#7c3aed','#38bdf8','#fbbf24','#2dd4bf','#f472b6'];
-let balloons = [], parts = [];
-function sizeCanvas(){ cv.width = cv.offsetWidth; cv.height = cv.offsetHeight; }
-sizeCanvas(); addEventListener('resize', sizeCanvas);
-function spawn(y){ balloons.push({
-  x: Math.random()*cv.width, y: y ?? cv.height + 60,
-  r: 18 + Math.random()*20, c: COLORS[Math.floor(Math.random()*COLORS.length)],
-  vy: .35 + Math.random()*.5, sway: Math.random()*Math.PI*2, sa: .3 + Math.random()*.6
-});}
-for(let i=0;i<12;i++) spawn(Math.random()*cv.height);
-function drawBalloon(b){
-  const sx = Math.sin(b.sway)*14;
-  cx.save(); cx.translate(b.x+sx, b.y);
-  cx.strokeStyle='rgba(30,27,58,.18)'; cx.beginPath(); cx.moveTo(0,b.r*1.15);
-  cx.quadraticCurveTo(4, b.r*1.7, 0, b.r*2.3); cx.stroke();
-  cx.fillStyle=b.c; cx.beginPath(); cx.ellipse(0,0,b.r*.82,b.r,0,0,7); cx.fill();
-  cx.fillStyle='rgba(255,255,255,.35)'; cx.beginPath();
-  cx.ellipse(-b.r*.28,-b.r*.3,b.r*.2,b.r*.3,-.4,0,7); cx.fill();
-  cx.fillStyle=b.c; cx.beginPath();
-  cx.moveTo(0,b.r); cx.lineTo(-5,b.r+8); cx.lineTo(5,b.r+8); cx.closePath(); cx.fill();
-  cx.restore();
-}
-function pop(b){
-  for(let i=0;i<14;i++) parts.push({
-    x:b.x+Math.sin(b.sway)*14, y:b.y, c:b.c,
-    vx:(Math.random()-.5)*7, vy:(Math.random()-.5)*7 - 1, life:1
-  });
-}
-cv.addEventListener('pointerdown', e => {
-  const r = cv.getBoundingClientRect(), mx = e.clientX-r.left, my = e.clientY-r.top;
-  for(let i=balloons.length-1;i>=0;i--){
-    const b=balloons[i], sx=Math.sin(b.sway)*14;
-    if(Math.hypot(mx-(b.x+sx), my-b.y) < b.r+10){ pop(b); balloons.splice(i,1); spawn(); break; }
-  }
-});
-(function loop(){
-  cx.clearRect(0,0,cv.width,cv.height);
-  balloons.forEach(b => { b.y -= b.vy; b.sway += b.sa*.02; if(b.y < -80){ b.y = cv.height+60; b.x = Math.random()*cv.width; } drawBalloon(b); });
-  parts = parts.filter(p => p.life > 0);
-  parts.forEach(p => { p.x+=p.vx; p.y+=p.vy; p.vy+=.15; p.life-=.03; cx.globalAlpha=p.life;
-    cx.fillStyle=p.c; cx.fillRect(p.x,p.y,6,6); cx.globalAlpha=1; });
-  requestAnimationFrame(loop);
-})();
-
-/* ===== stats counters ===== */
-const counters = document.querySelectorAll('[data-count]');
-const cObs = new IntersectionObserver(es => es.forEach(e => {
-  if(!e.isIntersecting) return; cObs.unobserve(e.target);
-  const end = +e.target.dataset.count, t0 = performance.now();
-  (function tick(t){ const p = Math.min((t-t0)/1400, 1);
-    e.target.textContent = Math.round(end * (1-Math.pow(1-p,3))).toLocaleString() + (p===1 && end>=100 ? '+' : '');
-    if(p<1) requestAnimationFrame(tick); })(t0);
-}), {threshold:.6});
-counters.forEach(c => cObs.observe(c));
-
-/* ===== service filter ===== */
-document.getElementById('serviceFilters').addEventListener('click', e => {
-  const btn = e.target.closest('.filter-btn'); if(!btn) return;
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('on', b===btn));
-  document.querySelectorAll('#serviceGrid .card').forEach(c =>
-    c.classList.toggle('hide', btn.dataset.f !== 'all' && c.dataset.cat !== btn.dataset.f));
-});
-
-/* ===== builder ===== */
-const state = { ev:'יום הולדת', style:'קשת אורגנית', colors:['ורוד'] };
-const COLOR_HEX = {'ורוד':'#ff4d8d','סגול':'#7c3aed','תכלת':'#38bdf8','זהב':'#fbbf24','לבן':'#f3f4f6','שחור':'#1e1b3a','אדום':'#ef4444','ירוק':'#2dd4bf'};
-function bindChips(id, key){
-  document.getElementById(id).addEventListener('click', e => {
-    const c = e.target.closest('.chip'); if(!c) return;
-    document.querySelectorAll(`#${id} .chip`).forEach(x => x.classList.toggle('on', x===c));
-    state[key] = c.dataset.v; renderPreview();
-  });
-}
-bindChips('evChips','ev'); bindChips('styleChips','style');
-document.getElementById('colorSwatches').addEventListener('click', e => {
-  const s = e.target.closest('.swatch'); if(!s) return;
-  const v = s.dataset.v, i = state.colors.indexOf(v);
-  if(i > -1){ if(state.colors.length > 1){ state.colors.splice(i,1); s.classList.remove('on'); } }
-  else if(state.colors.length < 3){ state.colors.push(v); s.classList.add('on'); }
-  renderPreview();
-});
-function renderPreview(){
-  document.getElementById('previewTitle').textContent = `${state.ev} · ${state.style}`;
-  document.getElementById('previewColors').textContent = `בצבעי ${state.colors.join(', ')} (עד 3 צבעים)`;
-  const pb = document.getElementById('previewBalloons');
-  pb.innerHTML = state.colors.map(c => `<div class="pb" style="background:${COLOR_HEX[c]}"></div>`).join('');
-}
-renderPreview();
-document.getElementById('sendWa').onclick = () => open(waLink(
-  `היי מיכאל! 🎈 אשמח להצעת מחיר:\n• אירוע: ${state.ev}\n• עיצוב: ${state.style}\n• צבעים: ${state.colors.join(', ')}\nתודה!`), '_blank');
-
-/* ===== gallery — real photos from Michael's events ===== */
-/* [מספר קובץ, קטגוריה, כיתוב] */
-const PHOTOS = [
-  [23,'arch','קשת אורגנית ורודה-זהב'],[33,'arch','שער צבעוני עם שטיח אדום'],[54,'love','ים של לבבות — יום האהבה'],
-  [22,'baby','קשת BABY BOY מעוצבת'],[9,'ceil','תקרת בלוני הליום בפסטל'],[38,'biz','עיצוב אולם תצוגת רכב'],
-  [2,'bday','יום הולדת 30 — רוז גולד ולבבות'],[13,'bday','עמודי מיקי מאוס ליום הולדת'],[44,'biz','מיתוג עסקי — קיר ירוק וזר בלונים'],
-  [53,'love','אותיות ענק מבלונים לחתונה'],[17,'arch','עמודי בלונים לרחבת ריקודים'],[60,'ceil','אשכול בלונים תלוי'],
-  [46,'biz','הדפסה על בלונים — מיתוג עסקי'],[37,'biz','שער ממותג לסניף בנק'],[29,'bday','יום הולדת 7 — צבעי הקשת'],
-  [59,'baby','קשת בוהו מפנקת לתינוק'],[12,'bday','קיר HAPPY BIRTHDAY'],[61,'biz','עמודי SALE לסוכנות רכב'],
-  [1,'love','מסיבת רווקות — Bride To Be'],[3,'biz','בלוני הליום כחולים לאירוע עסקי'],[4,'bday','זר בלוני כוכבים כחול'],
-  [5,'love','עיצוב חדר בלבן-כסוף'],[6,'biz','קישוט חזית חנות'],[7,'bday','יום הולדת 40 — כסוף מלכותי'],
-  [8,'arch','שער בלונים בקניון'],[10,'bday','הפתעה בחדר — יום הולדת 31'],[11,'bday','יום הולדת 30 — רוז גולד'],
-  [14,'ceil','תקרת בלונים בקניון'],[15,'ceil','בלוני הליום בחנות אופנה'],[16,'bday','עיצוב אולם בכחול לבר מצווה'],
-  [18,'arch','שער בלונים לחזית חנות'],[19,'love','לבבות אדומים ליום נישואין'],[20,'bday','יום הולדת 30 — לבבות רוז גולד'],
-  [21,'ceil','תקרת בלונים זוהרת'],[24,'arch','עמודי בלונים זהב-שחור'],[25,'bday','יום הולדת 30'],
-  [26,'bday','יום הולדת 30 — עיצוב מלא'],[27,'bday','יום הולדת עגול — רוז גולד'],[28,'love','לבבות זהב מרחפים בלובי'],
-  [30,'baby','קשת BABY BOY עם דובי'],[31,'bday','עמודי ליצנים לאירוע ילדים'],[32,'arch','שער בלונים מעל רכב'],
-  [34,'ceil','בלוני ענק באולם אירועים'],[35,'bday','בת מצווה — מספרי 12'],[36,'biz','עמודי מיתוג לחזית מסעדה'],
-  [39,'biz','קשת WELCOME לאירוע חברה'],[40,'bday','בת מצווה בסגול-כסוף'],[42,'ceil','בלוני הליום כחול-סגול'],
-  [43,'biz','עמודי בלונים לחזית עסק'],[45,'bday','עמודי שמחה לאירוע ילדים'],[47,'biz','קשת ממותגת לסניף בנק'],
-  [49,'biz','עיצוב אולם תצוגת רכב'],[50,'biz','קבלת פנים לאירוע השקה'],[51,'arch','קשת סגולה לאירוע'],
-  [52,'love','עיצוב חדר בשחור-לבן-כסוף'],[55,'biz','קישוט רחוב לאירוע'],[56,'arch','קשת בצבעי הקשת לחזית חנות'],
-  [57,'biz','אולם תצוגת רכב'],[58,'ceil','מפל בלונים צבעוני'],[62,'biz','תקרת בלונים באולם תצוגה']
-];
+/* build photo grids */
 const pad = n => String(n).padStart(2,'0');
-const gGrid = document.getElementById('gGrid'), gMore = document.getElementById('gMore');
-let gState = { cat:'all', expanded:false }, gVisible = [];
-function renderGallery(){
-  const list = PHOTOS.filter(p => gState.cat==='all' || p[1]===gState.cat);
-  gVisible = gState.expanded ? list : list.slice(0,18);
-  gGrid.innerHTML = gVisible.map(([n,,cap],i) =>
-    `<div class="g-item" data-i="${i}"><img loading="lazy" src="images/thumbs/photo-${pad(n)}.jpg" alt="${cap}"><span class="cap">${cap}</span></div>`
-  ).join('');
-  gMore.style.display = (!gState.expanded && list.length > 18) ? '' : 'none';
-  gMore.textContent = `הצג את כל התמונות (${list.length})`;
-}
-renderGallery();
-gMore.onclick = () => { gState.expanded = true; renderGallery(); };
-document.getElementById('gFilters').addEventListener('click', e => {
-  const btn = e.target.closest('.filter-btn'); if(!btn) return;
-  document.querySelectorAll('#gFilters .filter-btn').forEach(b => b.classList.toggle('on', b===btn));
-  gState.cat = btn.dataset.f; renderGallery();
+let all = [];
+document.querySelectorAll('.cat-grid').forEach(grid => {
+  grid.dataset.photos.split(',').forEach(n => {
+    const i = all.length; all.push(n.trim());
+    grid.insertAdjacentHTML('beforeend',
+      `<div class="ph" data-i="${i}"><img loading="lazy" src="images/thumbs/photo-${pad(n.trim())}.jpg" alt="דוגמת מיתוג בלונים"></div>`);
+  });
 });
 
-/* ===== lightbox ===== */
-const lb = document.getElementById('lb'), lbImg = document.getElementById('lbImg'), lbCap = document.getElementById('lbCap');
-let lbI = 0;
-function showLb(i){
-  lbI = (i + gVisible.length) % gVisible.length;
-  const [n,,cap] = gVisible[lbI];
-  lbImg.src = `images/photo-${pad(n)}.jpg`; lbImg.alt = cap; lbCap.textContent = cap;
-  lb.classList.add('open'); document.body.style.overflow = 'hidden';
-}
-function closeLb(){ lb.classList.remove('open'); document.body.style.overflow = ''; }
-gGrid.addEventListener('click', e => { const it = e.target.closest('.g-item'); if(it) showLb(+it.dataset.i); });
-lb.querySelector('.lb-close').onclick = closeLb;
-lb.querySelector('.lb-prev').onclick = e => { e.stopPropagation(); showLb(lbI-1); };
-lb.querySelector('.lb-next').onclick = e => { e.stopPropagation(); showLb(lbI+1); };
-lb.addEventListener('click', e => { if(e.target === lb) closeLb(); });
+/* lightbox */
+const lb = document.getElementById('lb'), lbImg = document.getElementById('lbImg');
+let cur = 0;
+function show(i){ cur = (i + all.length) % all.length; lbImg.src = `images/photo-${pad(all[cur])}.jpg`; lb.classList.add('open'); document.body.style.overflow = 'hidden'; }
+function close(){ lb.classList.remove('open'); document.body.style.overflow = ''; }
+document.addEventListener('click', e => { const ph = e.target.closest('.ph'); if(ph) show(+ph.dataset.i); });
+lb.querySelector('.x').onclick = close;
+lb.querySelector('.p').onclick = e => { e.stopPropagation(); show(cur-1); };
+lb.querySelector('.n').onclick = e => { e.stopPropagation(); show(cur+1); };
+lb.addEventListener('click', e => { if(e.target === lb) close(); });
 addEventListener('keydown', e => {
   if(!lb.classList.contains('open')) return;
-  if(e.key==='Escape') closeLb();
-  if(e.key==='ArrowRight') showLb(lbI-1);
-  if(e.key==='ArrowLeft') showLb(lbI+1);
+  if(e.key === 'Escape') close();
+  if(e.key === 'ArrowRight') show(cur-1);
+  if(e.key === 'ArrowLeft') show(cur+1);
 });
 
-/* ===== testimonials ===== */
-const tCards = document.querySelectorAll('.t-card'), tDots = document.getElementById('tDots');
-let tI = 0, tTimer;
-tCards.forEach((_, i) => {
-  const d = document.createElement('button'); d.className = 't-dot' + (i? '':' on');
-  d.onclick = () => { showT(i); resetT(); }; tDots.appendChild(d);
-});
-function showT(i){ tI = i;
-  tCards.forEach((c,j) => c.classList.toggle('show', j===i));
-  tDots.querySelectorAll('.t-dot').forEach((d,j) => d.classList.toggle('on', j===i));
-}
-function resetT(){ clearInterval(tTimer); tTimer = setInterval(() => showT((tI+1)%tCards.length), 5000); }
-resetT();
-
-/* ===== faq ===== */
-document.querySelectorAll('.faq-q').forEach(q => q.onclick = () => {
-  const item = q.parentElement, was = item.classList.contains('open');
-  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-  if(!was) item.classList.add('open');
-});
-
-/* ===== contact form → whatsapp ===== */
-document.getElementById('contactForm').addEventListener('submit', e => {
-  e.preventDefault();
-  const n = document.getElementById('fName').value.trim(),
-        p = document.getElementById('fPhone').value.trim(),
-        t = document.getElementById('fType').value,
-        m = document.getElementById('fMsg').value.trim();
-  open(waLink(`היי מיכאל! 🎈\nשם: ${n}\nטלפון: ${p}${t? '\nאירוע: '+t : ''}${m? '\nפרטים: '+m : ''}`), '_blank');
-});
-
-/* ===== scroll reveal ===== */
-const rObs = new IntersectionObserver(es => es.forEach(e => {
-  if(e.isIntersecting){ e.target.classList.add('in'); rObs.unobserve(e.target); }
+/* reveal on scroll */
+const obs = new IntersectionObserver(es => es.forEach(e => {
+  if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target); }
 }), {threshold:.12});
-document.querySelectorAll('.reveal').forEach(el => rObs.observe(el));
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 </script>
 </body>
 </html>
