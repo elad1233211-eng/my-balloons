@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ערכת הכנה לאמיר״ם — ורד</title>
+<style>
+  :root {
+    --bg: #FBFAF6;
+    --card: #FFFFFF;
+    --card-back: #F1F4EF;
+    --ink: #24313D;
+    --ink-soft: #5B6873;
+    --line: #E3E2DA;
+    --accent: #0E7C66;
+    --accent-soft: #E2F0EC;
+    --gold: #D97706;
+    --gold-soft: #FBEEDB;
+    --rose: #C2445E;
+    --blue: #2563AB;
+    --good: #15803D;
+    --good-soft: #E5F3E9;
+    --c-contrast: #D97706;
+    --c-cause: #0E7C66;
+    --c-add: #2563AB;
+    --c-example: #7C4DBE;
+    --c-cond: #C2445E;
+    --c-time: #0E7490;
+    --c-sum: #64707C;
+    --shadow: 0 1px 3px rgba(36,49,61,.08), 0 6px 18px rgba(36,49,61,.06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #171D23; --card: #212A33; --card-back: #263542; --ink: #E8EAE6; --ink-soft: #9AA6B0;
+      --line: #333E49; --accent: #3BB394; --accent-soft: #1D3630;
+      --gold: #F5A623; --gold-soft: #3A2E17; --rose: #EF7A94; --blue: #6BA6E8;
+      --good: #4ADE80; --good-soft: #1C3524;
+      --c-contrast: #F5A623; --c-cause: #3BB394; --c-add: #6BA6E8; --c-example: #B18CE8;
+      --c-cond: #EF7A94; --c-time: #4FC3DD; --c-sum: #93A0AC;
+      --shadow: 0 1px 3px rgba(0,0,0,.3), 0 6px 18px rgba(0,0,0,.25);
+    }
+  }
+  * { box-sizing: border-box; }
+  html { background: var(--bg); }
+  body {
+    margin: 0;
+    font-family: "Segoe UI", "Arial Hebrew", Arial, sans-serif;
+    background: var(--bg); color: var(--ink);
+    min-height: 100vh; line-height: 1.6;
+  }
+  .en { font-family: Georgia, "Times New Roman", serif; direction: ltr; unicode-bidi: isolate; }
+  .hidden { display: none !important; }
+  button { font-family: inherit; }
+  button:focus-visible, .rule:focus-within, details.acc summary:focus-visible {
+    outline: 2.5px solid var(--accent); outline-offset: 2px;
+  }
+
+  /* ===== Top bar & navigation ===== */
+  .topbar {
+    position: sticky; top: 0; z-index: 20;
+    background: var(--card); border-bottom: 1.5px solid var(--line);
+    padding: 12px 20px 0;
+  }
+  .topbar-in { max-width: 980px; margin: 0 auto; }
+  .brand { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .brand b { font-size: 17px; font-weight: 800; }
+  .brand span { font-size: 13px; color: var(--ink-soft); }
+  .nav { display: flex; gap: 4px; margin-top: 8px; }
+  .nav button {
+    border: 0; background: none; color: var(--ink-soft);
+    padding: 10px 18px 12px; font-size: 15.5px; font-weight: 700; cursor: pointer;
+    border-bottom: 3px solid transparent; margin-bottom: -1.5px;
+  }
+  .nav button.on { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* Motivation strip */
+  .motiv {
+    background: linear-gradient(135deg, var(--accent-soft), var(--gold-soft));
+    border-bottom: 1.5px solid var(--line);
+    padding: 10px 20px; text-align: center; cursor: pointer;
+  }
+  .motiv .motiv-in {
+    max-width: 980px; margin: 0 auto; font-size: 14.5px; font-weight: 700;
+    display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center;
+  }
+  .motiv .refresh { font-size: 11.5px; font-weight: 600; color: var(--ink-soft); }
+
+  /* Toast */
+  .toast {
+    position: fixed; bottom: 24px; right: 50%; transform: translateX(50%) translateY(120px);
+    background: var(--ink); color: var(--bg);
+    padding: 13px 22px; border-radius: 999px; font-size: 15px; font-weight: 700;
+    box-shadow: 0 8px 30px rgba(0,0,0,.25); z-index: 100;
+    transition: transform .35s; max-width: 90vw; text-align: center;
+  }
+  .toast.show { transform: translateX(50%) translateY(0); }
+  @media (prefers-reduced-motion: reduce) { .toast { transition: none; } }
+
+  main { padding: 28px 20px 80px; }
+  .wrap { max-width: 980px; margin: 0 auto; }
+  .wrap-narrow { max-width: 860px; margin: 0 auto; }
+
+  .kicker { font-size: 13px; letter-spacing: .14em; color: var(--accent); font-weight: 700; margin-bottom: 6px; }
+  h1 { font-size: clamp(24px, 4.5vw, 34px); font-weight: 800; margin: 0 0 8px; text-wrap: balance; }
+  .sub { color: var(--ink-soft); font-size: 16px; max-width: 62ch; line-height: 1.6; margin: 0; }
+  h2 { font-size: 21px; font-weight: 800; margin: 40px 0 6px; }
+  h2 .num {
+    display: inline-flex; width: 28px; height: 28px; border-radius: 8px;
+    background: var(--accent-soft); color: var(--accent); font-size: 15px;
+    align-items: center; justify-content: center; margin-inline-end: 9px; vertical-align: -4px;
+  }
+  .lede { color: var(--ink-soft); font-size: 15px; margin: 0 0 16px; max-width: 62ch; }
+  .noscript-warn {
+    max-width: 860px; margin: 20px auto; background: var(--gold-soft); color: var(--ink);
+    border: 1.5px solid var(--gold); border-radius: 12px; padding: 16px 20px; font-size: 15px;
+  }
+
+  /* ===== Words page ===== */
+  .toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 24px 0 14px; }
+  .modes { display: flex; border: 1.5px solid var(--line); border-radius: 10px; overflow: hidden; }
+  .modes button {
+    border: 0; background: var(--card); color: var(--ink-soft);
+    padding: 9px 20px; font-size: 15px; font-weight: 700; cursor: pointer;
+  }
+  .modes button.on { background: var(--accent); color: #fff; }
+  .spacer { flex: 1; }
+  .progress-pill {
+    background: var(--accent-soft); color: var(--accent);
+    font-weight: 700; font-size: 14px; padding: 7px 14px; border-radius: 999px;
+    font-variant-numeric: tabular-nums;
+  }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 7px;
+    border: 1.5px solid var(--line); background: var(--card); color: var(--ink);
+    border-radius: 999px; padding: 6px 14px; font-size: 14px; font-weight: 600; cursor: pointer;
+  }
+  .chip .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--dot, var(--ink-soft)); }
+  .chip.on { border-color: var(--dot, var(--accent)); box-shadow: inset 0 0 0 1px var(--dot, var(--accent)); }
+  .chip .cnt { color: var(--ink-soft); font-size: 12.5px; font-variant-numeric: tabular-nums; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)); gap: 14px; }
+  .flipcard {
+    position: relative; min-height: 158px; cursor: pointer;
+    perspective: 900px; background: none; border: 0; padding: 0; text-align: inherit; color: inherit;
+  }
+  .fc-inner { position: absolute; inset: 0; transition: transform .45s; transform-style: preserve-3d; }
+  @media (prefers-reduced-motion: reduce) { .fc-inner { transition: none; } }
+  .flipcard.flipped .fc-inner { transform: rotateY(180deg); }
+  .face {
+    position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden;
+    border-radius: 14px; border: 1.5px solid var(--line);
+    background: var(--card); box-shadow: var(--shadow);
+    padding: 14px 16px; display: flex; flex-direction: column;
+  }
+  .face.back { transform: rotateY(180deg); background: var(--card-back); }
+  .face .cat {
+    font-size: 11.5px; font-weight: 700; letter-spacing: .06em;
+    color: var(--catc); display: flex; align-items: center; gap: 6px;
+  }
+  .face .cat::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--catc); }
+  .face .word { font-size: 23px; font-weight: 700; margin: auto 0; line-height: 1.25; color: var(--ink); }
+  .face.back .he-word { font-size: 20px; font-weight: 800; margin-top: 8px; }
+  .face.back .ex { font-size: 12.5px; color: var(--ink-soft); line-height: 1.45; margin-top: 6px; direction: ltr; text-align: left; font-family: Georgia, serif; }
+  .face.back .ex b { color: var(--ink); }
+  .face .hint { font-size: 12px; color: var(--ink-soft); }
+  .knowmark {
+    position: absolute; top: 10px; left: 10px; z-index: 2;
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--good-soft); color: var(--good);
+    display: none; align-items: center; justify-content: center; font-size: 15px; font-weight: 800;
+  }
+  .flipcard.known .knowmark { display: flex; }
+  .backbtns { display: flex; gap: 8px; margin-top: 8px; }
+  .mini {
+    flex: 1; border: 1.5px solid var(--line); background: var(--card);
+    border-radius: 8px; padding: 5px 0; font-size: 13px; font-weight: 700;
+    cursor: pointer; color: var(--ink); text-align: center;
+  }
+  .mini.yes { border-color: var(--good); color: var(--good); }
+
+  .quizbox {
+    max-width: 620px; margin: 0 auto; background: var(--card);
+    border: 1.5px solid var(--line); border-radius: 18px; box-shadow: var(--shadow); padding: 28px;
+  }
+  .qmeta { display: flex; justify-content: space-between; color: var(--ink-soft); font-size: 14px; font-weight: 600; margin-bottom: 6px; font-variant-numeric: tabular-nums; }
+  .qbar { height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; margin-bottom: 22px; }
+  .qbar i { display: block; height: 100%; background: var(--accent); border-radius: 3px; transition: width .3s; }
+  .qword { font-size: 34px; font-weight: 700; text-align: center; margin: 6px 0 4px; }
+  .qask { text-align: center; color: var(--ink-soft); font-size: 15px; margin: 0 0 20px; }
+  .opts { display: grid; gap: 10px; }
+  .opt {
+    border: 1.5px solid var(--line); background: var(--bg); color: var(--ink);
+    border-radius: 11px; padding: 13px 16px; font-size: 17px; font-weight: 600;
+    cursor: pointer; text-align: right;
+  }
+  .opt:hover:not(:disabled) { border-color: var(--accent); }
+  .opt:disabled { cursor: default; }
+  .opt.correct { border-color: var(--good); background: var(--good-soft); color: var(--good); }
+  .opt.wrong { border-color: var(--rose); color: var(--rose); }
+  .qnext { margin-top: 18px; text-align: center; min-height: 30px; }
+  .btn {
+    border: 0; background: var(--accent); color: #fff; border-radius: 10px;
+    padding: 11px 28px; font-size: 16px; font-weight: 700; cursor: pointer;
+  }
+  .btn:disabled { opacity: .45; cursor: default; }
+  .qdone { text-align: center; }
+  .qscore { font-size: 52px; font-weight: 800; color: var(--accent); font-variant-numeric: tabular-nums; }
+  .qmsg { font-size: 17px; margin: 6px 0 20px; color: var(--ink-soft); }
+  footer.note { margin-top: 34px; color: var(--ink-soft); font-size: 13.5px; text-align: center; }
+
+  /* ===== Tips page ===== */
+  .ladder { background: var(--card); border: 1.5px solid var(--line); border-radius: 16px; box-shadow: var(--shadow); padding: 22px; }
+  .ladder-bar { position: relative; height: 14px; border-radius: 7px; overflow: visible; display: flex; margin: 40px 0 8px; }
+  .seg { height: 100%; }
+  .seg:first-of-type { border-radius: 0 7px 7px 0; }
+  .seg:last-of-type { border-radius: 7px 0 0 7px; }
+  .ladder-labels { display: flex; font-size: 12px; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+  .ladder-labels span { text-align: center; }
+  .marker {
+    position: absolute; top: -30px; transform: translateX(50%);
+    font-size: 12.5px; font-weight: 800; color: var(--rose); white-space: nowrap; z-index: 2;
+  }
+  .marker::after { content: ""; position: absolute; top: 19px; right: 50%; transform: translateX(50%); border: 5px solid transparent; border-top-color: var(--rose); }
+  .marker.target { color: var(--good); }
+  .marker.target::after { border-top-color: var(--good); }
+  .levels { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; margin-top: 16px; }
+  .lvl { border: 1.5px solid var(--line); border-radius: 10px; padding: 9px 11px; font-size: 13px; }
+  .lvl b { display: block; font-size: 13.5px; }
+  .lvl .rng { color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+  .lvl.here { border-color: var(--rose); }
+  .lvl.goal { border-color: var(--good); background: var(--good-soft); }
+  .smallnote { font-size: 12.5px; color: var(--ink-soft); margin: 12px 0 0; }
+
+  .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; }
+  .fact { background: var(--card); border: 1.5px solid var(--line); border-radius: 14px; padding: 15px 16px; box-shadow: var(--shadow); }
+  .fact b { display: block; font-size: 15px; margin-bottom: 3px; }
+  .fact span { font-size: 13.5px; color: var(--ink-soft); }
+
+  details.acc { background: var(--card); border: 1.5px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); margin-bottom: 10px; overflow: hidden; }
+  details.acc summary {
+    list-style: none; cursor: pointer; padding: 15px 18px;
+    font-weight: 800; font-size: 16.5px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  }
+  details.acc summary::-webkit-details-marker { display: none; }
+  details.acc summary .tag {
+    font-size: 11.5px; font-weight: 700; padding: 3px 10px; border-radius: 999px;
+    background: var(--accent-soft); color: var(--accent);
+  }
+  details.acc summary .arrow { margin-inline-start: auto; color: var(--ink-soft); transition: transform .2s; }
+  details.acc[open] summary .arrow { transform: rotate(180deg); }
+  details.acc .body { padding: 0 18px 18px; font-size: 15px; }
+  details.acc .body ul { margin: 8px 0 0; padding-inline-start: 20px; }
+  details.acc .body li { margin-bottom: 8px; }
+  details.acc .body li b { color: var(--accent); }
+  .exline { background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 14px; margin-top: 10px; font-size: 14px; }
+
+  .rules { display: grid; gap: 9px; }
+  .rule {
+    display: flex; align-items: flex-start; gap: 12px;
+    background: var(--card); border: 1.5px solid var(--line); border-radius: 12px;
+    padding: 13px 15px; cursor: pointer; box-shadow: var(--shadow);
+  }
+  .rule input { width: 20px; height: 20px; margin-top: 2px; accent-color: var(--accent); cursor: pointer; flex-shrink: 0; }
+  .rule .t { font-size: 15px; }
+  .rule .t b { display: block; font-size: 15.5px; }
+  .rule.done { border-color: var(--accent); background: var(--accent-soft); }
+  .rulebar { height: 8px; background: var(--line); border-radius: 4px; overflow: hidden; margin: 14px 0 6px; }
+  .rulebar i { display: block; height: 100%; background: var(--accent); border-radius: 4px; transition: width .3s; }
+  .rulecount { font-size: 13.5px; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+
+  .plan { border: 1.5px solid var(--line); border-radius: 14px; overflow: hidden; box-shadow: var(--shadow); }
+  .plan-row { display: grid; grid-template-columns: 92px 1fr; background: var(--card); border-bottom: 1.5px solid var(--line); }
+  .plan-row:last-child { border-bottom: 0; }
+  .plan-row .wk { background: var(--accent-soft); color: var(--accent); font-weight: 800; padding: 14px; display: flex; align-items: center; justify-content: center; font-size: 14px; text-align: center; }
+  .plan-row .what { padding: 13px 16px; font-size: 14.5px; }
+  .plan-row .what b { display: block; }
+  .plan-row .what span { color: var(--ink-soft); font-size: 13.5px; }
+
+  .practice { background: var(--card); border: 1.5px solid var(--line); border-radius: 16px; box-shadow: var(--shadow); padding: 24px; }
+  .pq { margin-bottom: 6px; font-size: 14px; color: var(--ink-soft); font-weight: 700; font-variant-numeric: tabular-nums; }
+  .psent { font-size: 19px; margin: 4px 0 16px; direction: ltr; text-align: left; }
+  .psent .blank { border-bottom: 2px solid var(--gold); padding: 0 18px; }
+  .popts { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 9px; }
+  .popt {
+    border: 1.5px solid var(--line); background: var(--bg); color: var(--ink);
+    border-radius: 10px; padding: 11px; font-size: 16px; font-weight: 600; cursor: pointer;
+    font-family: Georgia, serif; direction: ltr;
+  }
+  .popt:hover:not(:disabled) { border-color: var(--accent); }
+  .popt:disabled { cursor: default; }
+  .popt.correct { border-color: var(--good); background: var(--good-soft); color: var(--good); }
+  .popt.wrong { border-color: var(--rose); color: var(--rose); }
+  .pwhy { margin-top: 14px; font-size: 14.5px; background: var(--bg); border-radius: 10px; padding: 12px 15px; display: none; }
+  .pwhy.show { display: block; }
+  .pnav { margin-top: 18px; display: flex; align-items: center; gap: 12px; }
+  .pscore { font-size: 14px; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+  .pdone { text-align: center; padding: 10px 0; }
+  .pdone .big { font-size: 44px; font-weight: 800; color: var(--accent); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <div class="brand"><b>ערכת הכנה לאמיר״ם</b><span>מוגש באהבה מהמצטיין דיקן של המשפחה 😉</span></div>
+    <nav class="nav" aria-label="ניווט ראשי">
+      <button id="nav-words" class="on">📇 מילון מילים</button>
+      <button id="nav-tips">🎯 המלצות ואסטרטגיות</button>
+    </nav>
+  </div>
+</div>
+
+<button class="motiv" id="motiv" type="button" title="לחיצה = משפט חדש" style="width:100%; border:0; border-bottom:1.5px solid var(--line); color:var(--ink);">
+  <span class="motiv-in"><span id="motiv-text"></span><span class="refresh">↻ לחיצה למשפט חדש</span></span>
+</button>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<noscript>
+  <div class="noscript-warn">
+    <b>הדף הזה צריך JavaScript.</b> אם את/ה רואה את ההודעה הזאת — פתחו את הקובץ בדפדפן רגיל
+    (Chrome / Edge / Safari): לחיצה כפולה על הקובץ במחשב, או "פתח באמצעות דפדפן" בנייד.
+  </div>
+</noscript>
+
+<main>
+
+<!-- ============ PAGE 1: WORDS ============ -->
+<section id="page-words">
+<div class="wrap">
+  <header>
+    <div class="kicker">דף 1 · אוצר מילים</div>
+    <h1>מילות הקישור שחייבים להכיר</h1>
+    <p class="sub">מילות קישור הן המפתח לשאלות השלמת משפטים והבנת הנקרא באמיר״ם. לחצי על כרטיס כדי לראות את הפירוש, סמני מה כבר יודעת — ואז עברי למצב חידון כדי לבחון את עצמך. ההתקדמות נשמרת במכשיר.</p>
+  </header>
+
+  <div class="toolbar">
+    <div class="modes" role="tablist" aria-label="מצב לימוד">
+      <button id="mode-cards" class="on" role="tab" aria-selected="true">כרטיסיות</button>
+      <button id="mode-quiz" role="tab" aria-selected="false">חידון</button>
+    </div>
+    <div class="spacer"></div>
+    <span class="progress-pill" id="prog">0 / 0 מילים מסומנות</span>
+  </div>
+
+  <div id="cards-view">
+    <div class="chips" id="chips" role="group" aria-label="סינון לפי קטגוריה"></div>
+    <div class="grid" id="grid"></div>
+  </div>
+
+  <div id="quiz-view" class="hidden">
+    <div class="quizbox">
+      <div id="quiz-run">
+        <div class="qmeta"><span id="qnum">שאלה 1 / 10</span><span id="qscore-live">נכונות: 0</span></div>
+        <div class="qbar"><i id="qbarfill" style="width:0%"></i></div>
+        <div class="qword en" id="qword">however</div>
+        <p class="qask">מה הפירוש של המילה?</p>
+        <div class="opts" id="opts"></div>
+        <div class="qnext" id="qnext"></div>
+      </div>
+      <div id="quiz-done" class="qdone hidden">
+        <div class="qscore" id="finalscore">8/10</div>
+        <p class="qmsg" id="finalmsg"></p>
+        <button class="btn" id="again">חידון חדש</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="note">טיפ: התמקדי קודם במילות הניגוד והסיבה — הן הנפוצות ביותר בשאלות ההשלמה.</footer>
+</div>
+</section>
+
+<!-- ============ PAGE 2: TIPS ============ -->
+<section id="page-tips" class="hidden">
+<div class="wrap-narrow">
+  <header>
+    <div class="kicker">דף 2 · אסטרטגיה</div>
+    <h1>המדריך של ורד: מ־75 ל־100+</h1>
+    <p class="sub" style="margin-bottom:30px">75 זו נקודת פתיחה לגמרי הגיונית — רוב מי שניגשים שוב אחרי תרגול ממוקד קופצים משמעותית. כאן תמצאי את מבנה המבחן, אסטרטגיה לכל סוג שאלה, כללי זהב לשינון ותוכנית חודשית. סמני כללים שכבר שיננת — ההתקדמות נשמרת.</p>
+  </header>
+
+  <h2><span class="num">1</span>איפה את ומה היעד</h2>
+  <p class="lede">סולם הציונים של אמיר״ם נע בין 50 ל־150. הרמות המקובלות (עשוי להשתנות מעט בין מוסדות — כדאי לבדוק באתר המוסד שאלייך):</p>
+  <div class="ladder">
+    <div class="ladder-bar" aria-hidden="true">
+      <div class="marker" style="right: calc((75 - 50) / 100 * 100% - 20px);">את כאן · 75</div>
+      <div class="marker target" style="right: calc((100 - 50) / 100 * 100% - 20px);">יעד · 100</div>
+      <div class="seg" style="width:35%; background: var(--rose); opacity:.55;"></div>
+      <div class="seg" style="width:15%; background: var(--gold); opacity:.65;"></div>
+      <div class="seg" style="width:20%; background: var(--blue); opacity:.6;"></div>
+      <div class="seg" style="width:14%; background: var(--accent); opacity:.7;"></div>
+      <div class="seg" style="width:16%; background: var(--good); opacity:.75;"></div>
+    </div>
+    <div class="ladder-labels" aria-hidden="true">
+      <span style="width:35%">50–84</span><span style="width:15%">85–99</span><span style="width:20%">100–119</span><span style="width:14%">120–133</span><span style="width:16%">134+</span>
+    </div>
+    <div class="levels">
+      <div class="lvl here"><b>טרום בסיסי</b><span class="rng">50–84 · הציון הנוכחי</span></div>
+      <div class="lvl"><b>בסיסי</b><span class="rng">85–99 · סף קבלה נפוץ</span></div>
+      <div class="lvl goal"><b>מתקדמים א׳</b><span class="rng">100–119 · היעד המומלץ</span></div>
+      <div class="lvl"><b>מתקדמים ב׳</b><span class="rng">120–133</span></div>
+      <div class="lvl"><b>פטור מאנגלית</b><span class="rng">134–150</span></div>
+    </div>
+    <p class="smallnote">קפיצה מ־75 ל־100 היא יעד ריאלי לחודש של תרגול יומי. גם 85+ כבר פותח דלתות במוסדות רבים.</p>
+  </div>
+
+  <h2><span class="num">2</span>איך המבחן בנוי</h2>
+  <div class="facts">
+    <div class="fact"><b>מבחן ממוחשב אדפטיבי</b><span>הרמה מתאימה את עצמה אלייך: תשובה נכונה = שאלה קשה יותר. שאלות קשות = סימן טוב!</span></div>
+    <div class="fact"><b>אין דרך חזרה</b><span>אי אפשר לדלג ואי אפשר לחזור לשאלה קודמת. עונים ומתקדמים.</span></div>
+    <div class="fact"><b>טיימר לכל שאלה</b><span>לכל שאלה מוקצב זמן משלה. אם הזמן נגמר — עוברים הלאה, אז תמיד לסמן משהו.</span></div>
+    <div class="fact"><b>3 סוגי שאלות</b><span>השלמת משפטים, ניסוח מחדש והבנת הנקרא — בדיוק כמו בפרק האנגלית בפסיכומטרי.</span></div>
+  </div>
+
+  <h2><span class="num">3</span>אסטרטגיה לכל סוג שאלה</h2>
+  <p class="lede">לחצי על כל סוג כדי לפתוח את השיטה המלאה:</p>
+
+  <details class="acc" open>
+    <summary><span class="tag">הכי משתלם</span>השלמת משפטים <span class="en">(Sentence Completion)</span><span class="arrow">▾</span></summary>
+    <div class="body">
+      <ul>
+        <li><b>קראי את המשפט בלי המילה החסרה</b> ונסי להבין את הכיוון: האם החלק השני ממשיך את הראשון או מתנגד לו?</li>
+        <li><b>חפשי את מילת הקישור</b> — היא כמעט תמיד המפתח. <span class="en">however / although / despite</span> = ניגוד; <span class="en">therefore / because</span> = סיבה ותוצאה. (זה בדיוק דף המילים שבלשונית הראשונה!)</li>
+        <li><b>פסילה לפני בחירה:</b> בדרך כלל שתי תשובות נפסלות מיד כי הן הפוכות בכיוון. נשארות שתיים — ואז בוחרים לפי דקדוק והקשר.</li>
+        <li><b>הציבי את התשובה במשפט</b> וקראי אותו שוב בשלמותו. אם זה "נשמע מוזר" — כנראה לא זה.</li>
+      </ul>
+      <div class="exline en">He studied all night; ___, he failed the test. → מחפשים ניגוד → <b>however</b></div>
+    </div>
+  </details>
+
+  <details class="acc">
+    <summary>ניסוח מחדש <span class="en">(Restatement)</span><span class="arrow">▾</span></summary>
+    <div class="body">
+      <ul>
+        <li><b>הבינה את המשפט המקורי קודם.</b> תרגמי אותו לעצמך לעברית פשוטה במשפט אחד. רק אז עברי לתשובות.</li>
+        <li><b>חפשי שינוי משמעות, לא שינוי מילים.</b> התשובה הנכונה אומרת את אותו הדבר במילים אחרות. מסיחים אופייניים: היפוך הסיבה והתוצאה, הוספת מידע שלא היה, החלפת "חלק" ב"הכול".</li>
+        <li><b>זהירות ממילות שלילה:</b> <span class="en">not, never, unless, hardly, rarely</span> — שלילה אחת שהתפספסה הופכת את כל המשמעות.</li>
+        <li><b>פסלי כל תשובה שסותרת פרט אחד</b> מהמקור — גם אם השאר מושלם.</li>
+      </ul>
+    </div>
+  </details>
+
+  <details class="acc">
+    <summary>הבנת הנקרא <span class="en">(Reading Comprehension)</span><span class="arrow">▾</span></summary>
+    <div class="body">
+      <ul>
+        <li><b>קראי את השאלה לפני הקטע</b> — כך את יודעת מה לחפש ולא מבזבזת זמן על קריאה עמוקה מיותרת.</li>
+        <li><b>משפט ראשון של כל פסקה</b> = הרעיון המרכזי שלה. שאלות "מה מטרת הקטע" נענות כמעט תמיד משם.</li>
+        <li><b>שאלת מילה ("closest in meaning")</b> — קראי את המשפט שסביב המילה והציבי כל תשובה במקומה. אל תסתמכי רק על הפירוש שאת מכירה.</li>
+        <li><b>התשובה חייבת להיות כתובה בקטע.</b> אם את "משלימה מהידע הכללי" — זה כנראה מסיח.</li>
+      </ul>
+    </div>
+  </details>
+
+  <h2><span class="num">4</span>כללי הזהב — לשנן בעל־פה</h2>
+  <p class="lede">אלה הכללים שצריכים לרוץ לוורד בראש ביום המבחן. סמני כל כלל אחרי ששיננת אותו:</p>
+  <div class="rules" id="rules"></div>
+  <div class="rulebar"><i id="rulefill" style="width:0%"></i></div>
+  <div class="rulecount" id="rulecount"></div>
+
+  <h2><span class="num">5</span>תוכנית לימוד — 4 שבועות</h2>
+  <div class="plan">
+    <div class="plan-row"><div class="wk">שבוע 1</div><div class="what"><b>מילות קישור + אוצר מילים</b><span>15 דק׳ ביום בלשונית המילון, עד שהחידון יוצא 9/10 בכל קטגוריה. במקביל: פרק אנגלית אחד ביום מפסיכומטרי ישן.</span></div></div>
+    <div class="plan-row"><div class="wk">שבוע 2</div><div class="what"><b>השלמת משפטים וניסוח מחדש</b><span>תרגול ממוקד של שני הסוגים האלה בלבד, עם בדיקת כל טעות: למה טעיתי? איזו מילה לא הכרתי? להוסיף אותה לרשימה.</span></div></div>
+    <div class="plan-row"><div class="wk">שבוע 3</div><div class="what"><b>הבנת הנקרא + קריאה יומית</b><span>קטע אנגלית פשוט ביום (חדשות, ויקיפדיה באנגלית פשוטה). לתרגל "שאלה לפני קטע" עד שזה אוטומטי.</span></div></div>
+    <div class="plan-row"><div class="wk">שבוע 4</div><div class="what"><b>סימולציות בתנאי אמת</b><span>2–3 מבחני תרגול מלאים עם טיימר, בלי הפסקות. אחרי כל אחד — ניתוח טעויות. יומיים לפני המבחן: רק חזרה קלה ושינה טובה.</span></div></div>
+  </div>
+
+  <h2><span class="num">6</span>תרגול קצר — נסי בעצמך</h2>
+  <p class="lede">חמש שאלות השלמה בסגנון המבחן. כולן נפתרות עם מילות הקישור מלשונית המילון:</p>
+  <div class="practice">
+    <div id="p-run">
+      <div class="pq" id="pq">שאלה 1 מתוך 5</div>
+      <p class="psent en" id="psent"></p>
+      <div class="popts" id="popts"></div>
+      <div class="pwhy" id="pwhy"></div>
+      <div class="pnav">
+        <button class="btn" id="pnext" disabled>לשאלה הבאה</button>
+        <span class="pscore" id="pscorelive">נכונות: 0</span>
+      </div>
+    </div>
+    <div id="p-done" class="pdone hidden">
+      <div class="big" id="pfinal">5/5</div>
+      <p id="pmsg"></p>
+      <button class="btn" id="pagain">עוד סבב</button>
+    </div>
+  </div>
+
+  <footer class="note">בהצלחה ורד! 💪 · הרמות והספים משתנים מעט בין מוסדות — כדאי לוודא מול המוסד שאלייך</footer>
+</div>
+</section>
+
+</main>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ===== Safe storage (works even where localStorage is blocked) ===== */
+  var mem = {};
+  var store = {
+    get: function(k){ try { return localStorage.getItem(k); } catch(e){ return mem[k] || null; } },
+    set: function(k,v){ try { localStorage.setItem(k,v); } catch(e){ mem[k]=v; } }
+  };
+
+  /* ===== Motivation ===== */
+  var MOTIV = [
+    "יאללה אלופה, המצטיין דיקן של המשפחה כבר מרגיש מאוים 😎",
+    "עוד מילה ועוד מילה — ובסוף יהיו במשפחה שני מצטייני דיקן 😉",
+    "75 זה רק נקודת הפתיחה. אלופות לא נשארות בנקודת הפתיחה 🚀",
+    "האלוף הגדול בנה לך את הערכה — את רק צריכה להביא את הניצחון 🏆",
+    "כל כרטיס שאת הופכת = עוד צעד לתואר 🎓",
+    "מי שמסוגלת לשנן despite ו־nevertheless — מסוגלת להכול 💪",
+    "הדיקן כבר מחמם את החתימה למכתב ההצטיינות הבא 📜",
+    "יום אחד תספרי לכולם שהכול התחיל מ־75. תמשיכי 🔥",
+    "however = אבל. אבל אין 'אבל' — את הולכת לקרוע את המבחן הזה 😤",
+    "אלופה לא נולדת אלופה — היא מתרגלת 15 דקות ביום 📇",
+    "ורד, שאלה קשה במבחן = המחשב מפרגן. תחשבי על זה ככה 😏",
+    "המשפחה כולה מהמרת עלייך. בעיקר המצטיין דיקן 🎯"
+  ];
+  var motivText = document.getElementById("motiv-text");
+  var motivIdx = Math.floor(Math.random() * MOTIV.length);
+  function nextMotiv(){
+    motivIdx = (motivIdx + 1 + Math.floor(Math.random() * (MOTIV.length - 1))) % MOTIV.length;
+    motivText.textContent = MOTIV[motivIdx];
+  }
+  motivText.textContent = MOTIV[motivIdx];
+  document.getElementById("motiv").onclick = nextMotiv;
+
+  var toastEl = document.getElementById("toast");
+  var toastTimer = null;
+  function toast(msg){
+    toastEl.textContent = msg;
+    toastEl.classList.add("show");
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toastEl.classList.remove("show"); }, 3200);
+  }
+
+  /* ===== Navigation between the two pages ===== */
+  var pages = { words: document.getElementById("page-words"), tips: document.getElementById("page-tips") };
+  var navBtns = { words: document.getElementById("nav-words"), tips: document.getElementById("nav-tips") };
+  function goto(p){
+    Object.keys(pages).forEach(function(k){
+      pages[k].classList.toggle("hidden", k !== p);
+      navBtns[k].classList.toggle("on", k === p);
+    });
+    store.set("amiram-page", p);
+    window.scrollTo(0, 0);
+  }
+  navBtns.words.onclick = function(){ goto("words"); };
+  navBtns.tips.onclick = function(){ goto("tips"); };
+  var savedPage = store.get("amiram-page");
+  if (savedPage === "tips") goto("tips");
+
+  /* ================= PAGE 1: WORDS ================= */
+  var CATS = {
+    contrast:{he:"ניגוד", color:"var(--c-contrast)"},
+    cause:{he:"סיבה ותוצאה", color:"var(--c-cause)"},
+    add:{he:"הוספה", color:"var(--c-add)"},
+    example:{he:"הדגמה והבהרה", color:"var(--c-example)"},
+    cond:{he:"תנאי", color:"var(--c-cond)"},
+    time:{he:"זמן ורצף", color:"var(--c-time)"},
+    sum:{he:"סיכום והכללה", color:"var(--c-sum)"}
+  };
+  var WORDS = [
+    ["however","אבל, עם זאת","contrast","He studied hard; <b>however</b>, he failed."],
+    ["although","למרות ש־ (לפני משפט)","contrast","<b>Although</b> it rained, we went out."],
+    ["even though","אף על פי ש־","contrast","<b>Even though</b> she was tired, she kept going."],
+    ["despite","למרות (לפני שם עצם)","contrast","<b>Despite</b> the rain, the game continued."],
+    ["in spite of","למרות (כמו despite)","contrast","<b>In spite of</b> his age, he runs daily."],
+    ["nevertheless","אף על פי כן","contrast","It was risky; <b>nevertheless</b>, they tried."],
+    ["nonetheless","אף על פי כן (כמו nevertheless)","contrast","The task was hard; <b>nonetheless</b>, she finished."],
+    ["whereas","בעוד ש־, לעומת זאת","contrast","He is quiet, <b>whereas</b> his brother is loud."],
+    ["while","בעוד ש־ / בזמן ש־","contrast","<b>While</b> some agree, others do not."],
+    ["yet","אבל, ובכל זאת","contrast","Simple <b>yet</b> effective."],
+    ["on the other hand","מצד שני","contrast","It is cheap; <b>on the other hand</b>, it breaks easily."],
+    ["in contrast","בניגוד לכך","contrast","<b>In contrast</b> to cats, dogs need walks."],
+    ["conversely","להפך, באופן הפוך","contrast","Some love heat; <b>conversely</b>, others prefer cold."],
+    ["because","בגלל ש־, כי","cause","She left <b>because</b> she was ill."],
+    ["since","מכיוון ש־ / מאז","cause","<b>Since</b> it was late, we went home."],
+    ["due to","בגלל, עקב (לפני שם עצם)","cause","The delay was <b>due to</b> the storm."],
+    ["owing to","בשל, עקב","cause","<b>Owing to</b> the strike, flights stopped."],
+    ["therefore","לכן","cause","He was late; <b>therefore</b>, he missed the bus."],
+    ["thus","לפיכך, כך","cause","Prices rose; <b>thus</b>, sales dropped."],
+    ["consequently","כתוצאה מכך","cause","He ignored the rules; <b>consequently</b>, he was fined."],
+    ["as a result","כתוצאה מכך","cause","It snowed; <b>as a result</b>, school was closed."],
+    ["hence","מכאן ש־, לכן","cause","The road is closed; <b>hence</b> the traffic."],
+    ["lead to","להוביל ל־","cause","Stress can <b>lead to</b> illness."],
+    ["cause","לגרום ל־","cause","Smoking <b>causes</b> disease."],
+    ["moreover","יתר על כן","add","The plan is cheap; <b>moreover</b>, it is fast."],
+    ["furthermore","בנוסף לכך, זאת ועוד","add","<b>Furthermore</b>, the study proves it."],
+    ["in addition","בנוסף","add","<b>In addition</b>, students get a discount."],
+    ["additionally","בנוסף","add","<b>Additionally</b>, the app is free."],
+    ["besides","חוץ מזה, מלבד","add","<b>Besides</b> English, she speaks French."],
+    ["as well as","וגם, כמו גם","add","He plays piano <b>as well as</b> guitar."],
+    ["not only... but also","לא רק... אלא גם","add","She is <b>not only</b> smart <b>but also</b> kind."],
+    ["for example","לדוגמה","example","Some fruits, <b>for example</b> mangoes, are sweet."],
+    ["for instance","לדוגמה","example","Many cities, <b>for instance</b> Paris, are crowded."],
+    ["such as","כגון","example","Sports <b>such as</b> tennis need speed."],
+    ["namely","דהיינו, כלומר","example","One student passed, <b>namely</b> Dana."],
+    ["in other words","במילים אחרות","example","<b>In other words</b>, the answer is no."],
+    ["that is","כלומר","example","The test is adaptive, <b>that is</b>, it adjusts to you."],
+    ["if","אם","cond","<b>If</b> you practice, you improve."],
+    ["unless","אלא אם כן","cond","You will fail <b>unless</b> you study."],
+    ["provided that","בתנאי ש־","cond","You may enter <b>provided that</b> you register."],
+    ["as long as","כל עוד","cond","<b>As long as</b> you try, there is hope."],
+    ["otherwise","אחרת","cond","Hurry up; <b>otherwise</b>, we will be late."],
+    ["in case","למקרה ש־","cond","Take a coat <b>in case</b> it rains."],
+    ["before","לפני","time","Read the question <b>before</b> answering."],
+    ["after","אחרי","time","<b>After</b> the exam, she relaxed."],
+    ["during","במהלך","time","No phones <b>during</b> the test."],
+    ["meanwhile","בינתיים","time","She cooked; <b>meanwhile</b>, he cleaned."],
+    ["eventually","בסופו של דבר","time","<b>Eventually</b>, hard work pays off."],
+    ["subsequently","לאחר מכן","time","He graduated and <b>subsequently</b> found a job."],
+    ["until","עד ש־","time","Wait <b>until</b> the timer ends."],
+    ["once","ברגע ש־, כאשר","time","<b>Once</b> you answer, you cannot go back."],
+    ["as soon as","ברגע ש־, מיד כש־","time","Call me <b>as soon as</b> you finish."],
+    ["in conclusion","לסיכום","sum","<b>In conclusion</b>, practice is essential."],
+    ["to sum up","לסיכום","sum","<b>To sum up</b>, three points matter."],
+    ["overall","בסך הכול","sum","<b>Overall</b>, the results were good."],
+    ["in general","באופן כללי","sum","<b>In general</b>, reading daily helps."],
+    ["on the whole","בסך הכול, בגדול","sum","<b>On the whole</b>, the plan worked."],
+    ["in summary","בקצרה, לסיכום","sum","<b>In summary</b>, know your connectors."]
+  ];
+
+  var known = {};
+  try { known = JSON.parse(store.get("amiram-known-words") || "{}"); } catch(e) { known = {}; }
+  function saveKnown(){ store.set("amiram-known-words", JSON.stringify(known)); }
+
+  var activeCat = "all";
+  var grid = document.getElementById("grid");
+  var chipsEl = document.getElementById("chips");
+  var progEl = document.getElementById("prog");
+
+  var MILESTONES = {
+    10: "10 מילים! ההתחלה של אלופה 💪",
+    20: "20 מילים! המצטיין דיקן מתחיל להזיע 😅",
+    30: "30 מילים — חצית את החצי! ורד בכושר של אלופת עולם 🔥",
+    40: "40 מילים! עוד רגע אין לך מה ללמוד פה 😎",
+    50: "50 מילים!! זה כבר לא תרגול, זו השתלטות 🚀",
+    58: "כל ה־58!!! רשמית: אלופה. עברי לחידון ותוכיחי 🏆"
+  };
+  function updateProg(){
+    var n = WORDS.filter(function(w){ return known[w[0]]; }).length;
+    progEl.textContent = n + " / " + WORDS.length + " מילים מסומנות";
+    return n;
+  }
+
+  function renderChips(){
+    chipsEl.innerHTML = "";
+    var all = document.createElement("button");
+    all.className = "chip" + (activeCat==="all" ? " on" : "");
+    all.innerHTML = 'הכול <span class="cnt">(' + WORDS.length + ')</span>';
+    all.onclick = function(){ activeCat = "all"; renderChips(); renderGrid(); };
+    chipsEl.appendChild(all);
+    Object.keys(CATS).forEach(function(k){
+      var c = CATS[k];
+      var n = WORDS.filter(function(w){ return w[2]===k; }).length;
+      var b = document.createElement("button");
+      b.className = "chip" + (activeCat===k ? " on" : "");
+      b.style.setProperty("--dot", c.color);
+      b.innerHTML = '<span class="dot"></span>' + c.he + ' <span class="cnt">(' + n + ')</span>';
+      b.onclick = function(){ activeCat = k; renderChips(); renderGrid(); };
+      chipsEl.appendChild(b);
+    });
+  }
+
+  function renderGrid(){
+    grid.innerHTML = "";
+    WORDS.forEach(function(w){
+      if (activeCat !== "all" && w[2] !== activeCat) return;
+      var cat = CATS[w[2]];
+      var card = document.createElement("button");
+      card.className = "flipcard" + (known[w[0]] ? " known" : "");
+      card.setAttribute("aria-label", w[0] + " — לחצי להצגת הפירוש");
+      card.innerHTML =
+        '<span class="knowmark" aria-hidden="true">✓</span>' +
+        '<span class="fc-inner">' +
+          '<span class="face front" style="--catc:' + cat.color + '">' +
+            '<span class="cat">' + cat.he + '</span>' +
+            '<span class="word en">' + w[0] + '</span>' +
+            '<span class="hint">לחיצה = פירוש</span>' +
+          '</span>' +
+          '<span class="face back" style="--catc:' + cat.color + '">' +
+            '<span class="cat">' + cat.he + '</span>' +
+            '<span class="he-word">' + w[1] + '</span>' +
+            '<span class="ex">' + w[3] + '</span>' +
+            '<span class="backbtns">' +
+              '<span class="mini yes" data-act="know">ידעתי ✓</span>' +
+              '<span class="mini" data-act="dunno">לחזרה</span>' +
+            '</span>' +
+          '</span>' +
+        '</span>';
+      card.addEventListener("click", function(ev){
+        var t = ev.target;
+        var act = t && t.getAttribute ? t.getAttribute("data-act") : null;
+        if (act === "know") {
+          known[w[0]] = true; card.classList.add("known"); saveKnown();
+          var n = updateProg();
+          if (MILESTONES[n]) toast(MILESTONES[n]);
+          card.classList.remove("flipped"); return;
+        }
+        if (act === "dunno") { delete known[w[0]]; card.classList.remove("known"); saveKnown(); updateProg(); card.classList.remove("flipped"); return; }
+        card.classList.toggle("flipped");
+      });
+      grid.appendChild(card);
+    });
+  }
+
+  var cardsView = document.getElementById("cards-view");
+  var quizView = document.getElementById("quiz-view");
+  var modeCards = document.getElementById("mode-cards");
+  var modeQuiz = document.getElementById("mode-quiz");
+  var QUIZ_LEN = 10;
+  var quiz = { qs: [], i: 0, score: 0 };
+
+  function setMode(m){
+    var isQuiz = m === "quiz";
+    cardsView.classList.toggle("hidden", isQuiz);
+    quizView.classList.toggle("hidden", !isQuiz);
+    modeCards.classList.toggle("on", !isQuiz);
+    modeQuiz.classList.toggle("on", isQuiz);
+    modeCards.setAttribute("aria-selected", String(!isQuiz));
+    modeQuiz.setAttribute("aria-selected", String(isQuiz));
+    if (isQuiz) startQuiz();
+  }
+  modeCards.onclick = function(){ setMode("cards"); };
+  modeQuiz.onclick = function(){ setMode("quiz"); };
+
+  function shuffle(a){
+    for (var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; }
+    return a;
+  }
+
+  function startQuiz(){
+    quiz.qs = shuffle(WORDS.slice()).slice(0, QUIZ_LEN);
+    quiz.i = 0; quiz.score = 0;
+    document.getElementById("quiz-run").classList.remove("hidden");
+    document.getElementById("quiz-done").classList.add("hidden");
+    showQ();
+  }
+
+  function showQ(){
+    var q = quiz.qs[quiz.i];
+    document.getElementById("qnum").textContent = "שאלה " + (quiz.i+1) + " / " + quiz.qs.length;
+    document.getElementById("qscore-live").textContent = "נכונות: " + quiz.score;
+    document.getElementById("qbarfill").style.width = (quiz.i / quiz.qs.length * 100) + "%";
+    document.getElementById("qword").textContent = q[0];
+    document.getElementById("qnext").innerHTML = "";
+    var wrongs = shuffle(WORDS.filter(function(w){ return w[1] !== q[1]; })).slice(0,3).map(function(w){ return w[1]; });
+    var options = shuffle([q[1]].concat(wrongs));
+    var box = document.getElementById("opts");
+    box.innerHTML = "";
+    options.forEach(function(opt){
+      var b = document.createElement("button");
+      b.className = "opt"; b.textContent = opt;
+      b.onclick = function(){ answer(b, opt === q[1], q); };
+      box.appendChild(b);
+    });
+  }
+
+  function answer(btn, correct, q){
+    var btns = document.querySelectorAll("#opts .opt");
+    Array.prototype.forEach.call(btns, function(b){
+      b.disabled = true;
+      if (b.textContent === q[1]) b.classList.add("correct");
+    });
+    if (correct) { quiz.score++; } else { btn.classList.add("wrong"); }
+    document.getElementById("qscore-live").textContent = "נכונות: " + quiz.score;
+    var next = document.createElement("button");
+    next.className = "btn";
+    next.textContent = quiz.i + 1 < quiz.qs.length ? "לשאלה הבאה" : "לתוצאה";
+    next.onclick = function(){
+      quiz.i++;
+      if (quiz.i < quiz.qs.length) showQ(); else finishQuiz();
+    };
+    document.getElementById("qnext").appendChild(next);
+    next.focus();
+  }
+
+  function finishQuiz(){
+    document.getElementById("quiz-run").classList.add("hidden");
+    document.getElementById("quiz-done").classList.remove("hidden");
+    document.getElementById("finalscore").textContent = quiz.score + "/" + quiz.qs.length;
+    var msg;
+    if (quiz.score === quiz.qs.length) msg = "10/10?! אלופההה!! 🏆 ציון של מצטיינת דיקן — תגידי לאלוף הגדול שיפנה מקום על המדף לתעודה שלך 😎";
+    else if (quiz.score >= 9) msg = "מצוין! עוד שאלה אחת ואת עוקפת את המצטיין דיקן. עברי לקטגוריה הבאה או ללשונית ההמלצות 💪";
+    else if (quiz.score >= 7) msg = "יפה מאוד אלופה! עוד סבב או שניים ואת שם 🔥";
+    else if (quiz.score >= 5) msg = "התחלה טובה. גם האלוף הגדול לא נהיה מצטיין ביום אחד — חזרי לכרטיסיות שפספסת ונסי שוב.";
+    else msg = "זה בסדר — ככה נראית ההתחלה של כל אלופה. עברי על הכרטיסיות קטגוריה-קטגוריה ואז נסי שוב 💪";
+    document.getElementById("finalmsg").textContent = msg;
+  }
+  document.getElementById("again").onclick = startQuiz;
+
+  renderChips();
+  renderGrid();
+  updateProg();
+
+  /* ================= PAGE 2: TIPS ================= */
+  var RULES = [
+    ["עונים על הכול, תמיד", "אין חזרה אחורה ואין דילוג. אם הזמן נגמר או שאין מושג — פוסלים מה שאפשר ומנחשים מבין הנותרות."],
+    ["שאלה קשה = חדשות טובות", "המבחן אדפטיבי. אם השאלות נהיות קשות, סימן שאת מצליחה. לא להילחץ מזה."],
+    ["מילת הקישור קודמת לכול", "בכל השלמת משפט — קודם מזהים את הכיוון: ניגוד, סיבה, הוספה או תנאי. רק אז בוחרים תשובה."],
+    ["פסילה לפני בחירה", "קל יותר לפסול 2 תשובות שגויות מלמצוא את הנכונה. תמיד מצמצמים קודם."],
+    ["לשים לב לשלילות", "not, unless, never, hardly — מילת שלילה אחת הופכת את כל המשפט. לקרוא אותן פעמיים."],
+    ["לא להיתקע על שאלה", "הטיימר של השאלה רץ. אם אחרי 30–40 שניות אין כיוון — פוסלים, מנחשים, ממשיכים בראש נקי."],
+    ["התשובה נמצאת בקטע", "בהבנת הנקרא לא מסתמכים על ידע כללי. אם זה לא כתוב — זה מסיח."],
+    ["לילה לפני: שינה, לא שינון", "מבחן אדפטיבי מודד חדות. שעת שינה שווה יותר מעוד שעת תרגול מאוחרת."]
+  ];
+  var done = {};
+  try { done = JSON.parse(store.get("amiram-rules-done") || "{}"); } catch(e){ done = {}; }
+  var rulesEl = document.getElementById("rules");
+  RULES.forEach(function(r, i){
+    var lab = document.createElement("label");
+    lab.className = "rule" + (done[i] ? " done" : "");
+    lab.innerHTML = '<input type="checkbox" ' + (done[i] ? "checked" : "") + ' aria-label="שיננתי: ' + r[0] + '">' +
+      '<span class="t"><b>' + r[0] + '</b>' + r[1] + '</span>';
+    lab.querySelector("input").addEventListener("change", function(ev){
+      if (ev.target.checked) done[i] = true; else delete done[i];
+      lab.classList.toggle("done", !!done[i]);
+      store.set("amiram-rules-done", JSON.stringify(done));
+      updateRuleBar();
+    });
+    rulesEl.appendChild(lab);
+  });
+  var rulesWereComplete = Object.keys(done).length === RULES.length;
+  function updateRuleBar(){
+    var n = Object.keys(done).length;
+    document.getElementById("rulefill").style.width = (n / RULES.length * 100) + "%";
+    document.getElementById("rulecount").textContent =
+      n === RULES.length ? "כל " + RULES.length + " הכללים משוננים — אלופה, את מוכנה! 🏆"
+      : n + " מתוך " + RULES.length + " כללים משוננים";
+    if (n === RULES.length && !rulesWereComplete) {
+      toast("כל כללי הזהב בראש! המצטיין דיקן מאשר: מוכנה למבחן 🏆");
+    }
+    rulesWereComplete = (n === RULES.length);
+  }
+  updateRuleBar();
+
+  var QS = [
+    {
+      s: 'He studied hard for weeks; <span class="blank"></span>, he failed the exam.',
+      opts: ["however", "therefore", "moreover", "because"],
+      a: "however",
+      why: "שני חלקי המשפט מנוגדים (למד קשה ← נכשל), לכן צריך מילת ניגוד: however = אבל, עם זאת. therefore (לכן) ו־moreover (יתר על כן) ממשיכות את אותו כיוון — נפסלות."
+    },
+    {
+      s: '<span class="blank"></span> the heavy rain, the football match continued as planned.',
+      opts: ["Despite", "Because of", "Although", "Therefore"],
+      a: "Despite",
+      why: "יש ניגוד (גשם כבד ← המשחק המשיך), וצריך מילה שבאה לפני שם עצם (the rain). Despite = למרות + שם עצם. Although נכון במשמעות אבל דורש משפט שלם אחריו, לא שם עצם."
+    },
+    {
+      s: 'The flight was canceled <span class="blank"></span> the storm.',
+      opts: ["due to", "although", "so that", "unless"],
+      a: "due to",
+      why: "הסופה היא הסיבה לביטול — צריך מילת סיבה לפני שם עצם: due to = בגלל, עקב. unless (אלא אם כן) ו־although (למרות) הופכים את המשמעות."
+    },
+    {
+      s: 'You will not improve <span class="blank"></span> you practice every single day.',
+      opts: ["unless", "because", "despite", "moreover"],
+      a: "unless",
+      why: "unless = אלא אם כן: \"לא תשתפרי אלא אם כן תתרגלי כל יום\". because היה נותן משפט הפוך בהיגיון (לא תשתפרי בגלל שאת מתרגלת?)."
+    },
+    {
+      s: 'The book was expensive; <span class="blank"></span>, it was worth every shekel.',
+      opts: ["nevertheless", "as a result", "for instance", "similarly"],
+      a: "nevertheless",
+      why: "ניגוד: יקר ← ובכל זאת היה שווה. nevertheless = אף על פי כן. as a result (כתוצאה מכך) ממשיך את הכיוון ולכן נפסל."
+    }
+  ];
+  var pi = 0, pscore = 0, answered = false;
+  var psent = document.getElementById("psent"),
+      popts = document.getElementById("popts"),
+      pwhy = document.getElementById("pwhy"),
+      pnext = document.getElementById("pnext");
+
+  function showP(){
+    var q = QS[pi];
+    answered = false;
+    document.getElementById("pq").textContent = "שאלה " + (pi+1) + " מתוך " + QS.length;
+    psent.innerHTML = q.s;
+    pwhy.classList.remove("show");
+    pnext.disabled = true;
+    pnext.textContent = pi + 1 < QS.length ? "לשאלה הבאה" : "לתוצאה";
+    popts.innerHTML = "";
+    shuffle(q.opts.slice()).forEach(function(o){
+      var b = document.createElement("button");
+      b.className = "popt"; b.textContent = o;
+      b.onclick = function(){
+        if (answered) return;
+        answered = true;
+        var all = popts.querySelectorAll(".popt");
+        Array.prototype.forEach.call(all, function(x){
+          x.disabled = true;
+          if (x.textContent === q.a) x.classList.add("correct");
+        });
+        if (o === q.a) pscore++; else b.classList.add("wrong");
+        document.getElementById("pscorelive").textContent = "נכונות: " + pscore;
+        pwhy.textContent = q.why;
+        pwhy.classList.add("show");
+        pnext.disabled = false;
+        pnext.focus();
+      };
+      popts.appendChild(b);
+    });
+  }
+
+  pnext.onclick = function(){
+    pi++;
+    if (pi < QS.length) { showP(); return; }
+    document.getElementById("p-run").classList.add("hidden");
+    document.getElementById("p-done").classList.remove("hidden");
+    document.getElementById("pfinal").textContent = pscore + "/" + QS.length;
+    document.getElementById("pmsg").textContent =
+      pscore === QS.length ? "5/5 — מושלם! את חושבת בדיוק כמו שצריך לחשוב במבחן. המצטיין דיקן היה גאה, ועכשיו תורך להביא תעודה משלך הביתה 🏆"
+      : pscore >= 3 ? "יפה מאוד אלופה! שימי לב להסברים של מה שפוספס — שם הנקודות הקלות 💪"
+      : "עברי שוב על מילות הניגוד והסיבה בלשונית המילון ואז חזרי לכאן — זה ייכנס מהר. גם אלופות מתחילות מסבב ראשון חלש 😉";
+  };
+  document.getElementById("pagain").onclick = function(){
+    pi = 0; pscore = 0;
+    document.getElementById("pscorelive").textContent = "נכונות: 0";
+    document.getElementById("p-run").classList.remove("hidden");
+    document.getElementById("p-done").classList.add("hidden");
+    showP();
+  };
+  showP();
+})();
+</script>
+</body>
+</html>
