@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>לוח בקרה — הכנת אמיר״ם של ורד</title>
+<style>
+  :root {
+    --bg: #FBFAF6; --card: #FFFFFF; --ink: #24313D; --ink-soft: #5B6873;
+    --line: #E3E2DA; --accent: #0E7C66; --accent-soft: #E2F0EC; --gold: #D97706;
+    --shadow: 0 1px 3px rgba(36,49,61,.08), 0 6px 18px rgba(36,49,61,.06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #171D23; --card: #212A33; --ink: #E8EAE6; --ink-soft: #9AA6B0;
+      --line: #333E49; --accent: #3BB394; --accent-soft: #1D3630; --gold: #F5A623;
+      --shadow: 0 1px 3px rgba(0,0,0,.3), 0 6px 18px rgba(0,0,0,.25);
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: "Segoe UI", "Arial Hebrew", Arial, sans-serif; line-height: 1.6;
+    min-height: 100vh; padding: 32px 20px;
+  }
+  .wrap { max-width: 620px; margin: 0 auto; }
+  .kicker { font-size: 13px; letter-spacing: .14em; color: var(--accent); font-weight: 700; margin-bottom: 6px; }
+  h1 { font-size: 26px; font-weight: 800; margin: 0 0 6px; }
+  .sub { color: var(--ink-soft); font-size: 15px; margin: 0 0 24px; }
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; }
+  .tile {
+    background: var(--card); border: 1.5px solid var(--line); border-radius: 16px;
+    box-shadow: var(--shadow); padding: 20px; text-align: center;
+  }
+  .tile .big { font-size: 44px; font-weight: 800; color: var(--accent); font-variant-numeric: tabular-nums; line-height: 1.1; }
+  .tile .lbl { font-size: 14px; font-weight: 700; margin-top: 4px; }
+  .tile .desc { font-size: 12.5px; color: var(--ink-soft); margin-top: 3px; }
+  .tile.warn .big { color: var(--gold); }
+  .bar { display: flex; align-items: center; gap: 12px; margin-top: 22px; flex-wrap: wrap; }
+  button {
+    border: 0; background: var(--accent); color: #fff; border-radius: 10px;
+    padding: 10px 22px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit;
+  }
+  button:disabled { opacity: .5; cursor: default; }
+  .meta { font-size: 13px; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+  .note {
+    margin-top: 26px; background: var(--accent-soft); border-radius: 12px;
+    padding: 14px 16px; font-size: 13.5px; color: var(--ink);
+  }
+  .err { color: var(--gold); font-size: 13.5px; margin-top: 10px; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="kicker">פרטי · רק בשבילך</div>
+  <h1>לוח הבקרה של האלוף 🏆</h1>
+  <p class="sub">כמה ורד באמת השתמשה בערכה. המספרים אנונימיים לגמרי — רק ספירה, בלי שום פרט אישי.</p>
+
+  <div class="tiles">
+    <div class="tile"><div class="big" id="opens">…</div><div class="lbl">כניסות ללימוד</div><div class="desc">מספר הפעמים שהדף נפתח</div></div>
+    <div class="tile"><div class="big" id="quizzes">…</div><div class="lbl">חידונים שהושלמו</div><div class="desc">חידוני מילים עד הסוף</div></div>
+    <div class="tile"><div class="big" id="practice">…</div><div class="lbl">תרגולים שהושלמו</div><div class="desc">סבבי השלמת משפטים</div></div>
+  </div>
+
+  <div class="bar">
+    <button id="refresh">↻ רענון</button>
+    <span class="meta" id="updated"></span>
+  </div>
+  <div class="err" id="err"></div>
+
+  <div class="note">
+    💡 שים לב: הספירה כוללת גם כניסות שלך (כשאתה בודק את הדף). למספרים "אמיתיים" של ורד —
+    הכי מדויק זה כפתור "שלחי התקדמות לאלוף" שהיא לוחצת בתוך הערכה, שמראה לך בדיוק כמה מילים למדה.
+    <br><br>
+    הערכה של ורד: <a href="./" target="_blank">פתיחה</a>
+  </div>
+</div>
+
+<script>
+  var NS = "amiram-vered-q7w3z8";
+  var KEYS = ["opens", "quizzes", "practice"];
+  function get(key){
+    return fetch("https://abacus.jasoncameron.dev/get/" + NS + "/" + key + "?_=" + Date.now())
+      .then(function(r){ return r.json(); })
+      .then(function(j){ return (j && typeof j.value === "number") ? j.value : 0; })
+      .catch(function(){ return null; });
+  }
+  function load(){
+    var btn = document.getElementById("refresh");
+    btn.disabled = true;
+    document.getElementById("err").textContent = "";
+    Promise.all(KEYS.map(get)).then(function(vals){
+      var anyFail = false;
+      KEYS.forEach(function(k, i){
+        var el = document.getElementById(k);
+        if (vals[i] === null) { el.textContent = "—"; anyFail = true; }
+        else el.textContent = vals[i];
+      });
+      var now = new Date();
+      document.getElementById("updated").textContent =
+        "עודכן: " + now.toLocaleTimeString("he-IL", {hour:"2-digit", minute:"2-digit"}) +
+        " · " + now.toLocaleDateString("he-IL");
+      if (anyFail) document.getElementById("err").textContent = "חלק מהמספרים לא נטענו — נסה רענון שוב בעוד רגע.";
+      btn.disabled = false;
+    });
+  }
+  document.getElementById("refresh").onclick = load;
+  load();
+</script>
+</body>
+</html>

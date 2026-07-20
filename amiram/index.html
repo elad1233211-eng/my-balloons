@@ -96,7 +96,18 @@
   .toast.show { transform: translateX(50%) translateY(0); }
   @media (prefers-reduced-motion: reduce) { .toast { transition: none; } }
 
-  main { padding: 28px 20px 80px; }
+  /* Share to WhatsApp — floating button */
+  .fab-share {
+    position: fixed; bottom: 20px; left: 20px; z-index: 90;
+    background: #25D366; color: #fff; border: 0; border-radius: 999px;
+    padding: 12px 18px; font-weight: 800; font-size: 14px; cursor: pointer;
+    box-shadow: 0 6px 20px rgba(0,0,0,.22); display: inline-flex; align-items: center; gap: 8px;
+  }
+  .fab-share:hover { filter: brightness(1.05); }
+  .fab-share:active { transform: translateY(1px); }
+  @media (max-width: 480px) { .fab-share { padding: 11px 15px; font-size: 13px; } }
+
+  main { padding: 28px 20px 90px; }
   .wrap { max-width: 980px; margin: 0 auto; }
   .wrap-narrow { max-width: 860px; margin: 0 auto; }
 
@@ -317,6 +328,8 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+<button class="fab-share" id="shareBtn" type="button">📤 שלחי התקדמות לאלוף</button>
+
 <noscript>
   <div class="noscript-warn">
     <b>הדף הזה צריך JavaScript.</b> אם את/ה רואה את ההודעה הזאת — פתחו את הקובץ בדפדפן רגיל
@@ -536,6 +549,44 @@
     if (toastTimer) clearTimeout(toastTimer);
     toastTimer = setTimeout(function(){ toastEl.classList.remove("show"); }, 3200);
   }
+
+  /* ===== Anonymous visit/activity counter (no signup, no personal data) ===== */
+  var COUNTER_NS = "amiram-vered-q7w3z8";
+  function bump(key){
+    try {
+      var img = new Image();
+      img.src = "https://abacus.jasoncameron.dev/hit/" + COUNTER_NS + "/" + key + "?_=" + Date.now();
+    } catch(e){}
+  }
+  // Count one "study session" per browser session (not every refresh/nav).
+  try {
+    if (!sessionStorage.getItem("amiram-counted")) {
+      sessionStorage.setItem("amiram-counted", "1");
+      bump("opens");
+    }
+  } catch(e){ bump("opens"); }
+
+  /* ===== Share progress to WhatsApp (the family champion) ===== */
+  var CHAMP_WA = "972547991019"; // 054-799-1019
+  function readCount(k){ try { return Object.keys(JSON.parse(store.get(k) || "{}")).length; } catch(e){ return 0; } }
+  document.getElementById("shareBtn").onclick = function(){
+    var words = readCount("amiram-known-words");
+    var rules = readCount("amiram-rules-done");
+    var bestQuiz = parseInt(store.get("amiram-best-quiz") || "0", 10);
+    var bestPr = parseInt(store.get("amiram-best-practice") || "0", 10);
+    var lines = [
+      "היי אלוף! 👋 עדכון קטן מההכנה לאמיר״ם:",
+      "",
+      "✅ מילים שאני כבר יודעת: " + words + " מתוך 58",
+      "🎯 כללי זהב ששיננתי: " + rules + " מתוך 8"
+    ];
+    if (bestQuiz > 0) lines.push("🧠 הציון הכי טוב שלי בחידון המילים: " + bestQuiz + "/10");
+    if (bestPr > 0) lines.push("📝 תרגול השלמת משפטים: " + bestPr + "/5");
+    lines.push("");
+    lines.push("תודה על הערכה! עוד קצת ואני עוקפת את המצטיין דיקן 😏🏆");
+    var msg = encodeURIComponent(lines.join("\n"));
+    window.open("https://wa.me/" + CHAMP_WA + "?text=" + msg, "_blank");
+  };
 
   /* ===== Navigation between the two pages ===== */
   var pages = { words: document.getElementById("page-words"), tips: document.getElementById("page-tips") };
@@ -783,6 +834,10 @@
     document.getElementById("quiz-run").classList.add("hidden");
     document.getElementById("quiz-done").classList.remove("hidden");
     document.getElementById("finalscore").textContent = quiz.score + "/" + quiz.qs.length;
+    bump("quizzes");
+    if (quiz.score > parseInt(store.get("amiram-best-quiz") || "0", 10)) {
+      store.set("amiram-best-quiz", String(quiz.score));
+    }
     var msg;
     if (quiz.score === quiz.qs.length) msg = "10/10?! אלופההה!! 🏆 ציון של מצטיינת דיקן — תגידי לאלוף הגדול שיפנה מקום על המדף לתעודה שלך 😎";
     else if (quiz.score >= 9) msg = "מצוין! עוד שאלה אחת ואת עוקפת את המצטיין דיקן. עברי לקטגוריה הבאה או ללשונית ההמלצות 💪";
@@ -913,6 +968,10 @@
     document.getElementById("p-run").classList.add("hidden");
     document.getElementById("p-done").classList.remove("hidden");
     document.getElementById("pfinal").textContent = pscore + "/" + QS.length;
+    bump("practice");
+    if (pscore > parseInt(store.get("amiram-best-practice") || "0", 10)) {
+      store.set("amiram-best-practice", String(pscore));
+    }
     document.getElementById("pmsg").textContent =
       pscore === QS.length ? "5/5 — מושלם! את חושבת בדיוק כמו שצריך לחשוב במבחן. המצטיין דיקן היה גאה, ועכשיו תורך להביא תעודה משלך הביתה 🏆"
       : pscore >= 3 ? "יפה מאוד אלופה! שימי לב להסברים של מה שפוספס — שם הנקודות הקלות 💪"
